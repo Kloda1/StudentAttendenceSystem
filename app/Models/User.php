@@ -12,7 +12,6 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
     use HasPanelShield;
@@ -20,7 +19,7 @@ class User extends Authenticatable implements FilamentUser
     use Notifiable;
 
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 
@@ -28,4 +27,41 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+ public function canAccessPanel(\Filament\Panel $panel): bool
+{
+    return $this->email === 'super@admin.com' || $this->hasRole(['super_admin', 'admin']);
+}
+
+
+ 
+public function attendances()
+{
+    return $this->hasMany(Attendance::class, 'student_id');
+}
+
+public function devices()
+{
+    return $this->hasMany(StudentDevice::class, 'student_id');
+}
+
+public function department()
+{
+    return $this->belongsTo(Department::class);
+}
+
+ public function subjects()
+{
+    return $this->hasMany(Subject::class, 'lecturer_id');
+}
+
+public function lectureSessions()
+{
+    return $this->hasMany(LectureSession::class, 'lecturer_id');
+}
+
+ public function headedDepartment()
+{
+    return $this->hasOne(Department::class, 'head_of_department');
+}
 }
