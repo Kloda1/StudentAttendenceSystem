@@ -16,6 +16,24 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+
+
+            $table->string('type')->default('student');
+
+            $table->string('phone')->nullable();
+            $table->enum('status', ['pending', 'active', 'blocked', 'suspended'])->default('pending');
+
+            $table->string('student_number')->unique()->nullable();
+            // $table->foreignId('department_id')->unique()->nullable();  
+            $table->string('activation_code', 6)->nullable() ;
+            $table->timestamp('activation_expires')->nullable();
+            $table->enum('role', ['super_admin', 'attendance_monitor', 'course_lecturer']);
+
+            // $table->string('lecturer_id')->unique()->nullable();  
+            $table->enum('title', ['professor', 'associate_professor', 'lecturer', 'teaching_assistant'])->nullable();
+            $table->boolean('is_active')->default(true);
+
+
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

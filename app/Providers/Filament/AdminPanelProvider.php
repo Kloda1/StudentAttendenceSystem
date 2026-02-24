@@ -75,7 +75,7 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
 
 
-            ->brandName('Almanara University ')
+            ->brandName('Student Attendence System ')
             // ->favicon(asset('images/favicon.ico'))
             // ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
