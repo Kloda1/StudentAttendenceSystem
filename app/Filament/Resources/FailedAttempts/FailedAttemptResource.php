@@ -55,4 +55,9 @@ class FailedAttemptResource extends Resource
             'edit' => EditFailedAttempt::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('super_admin');
+    }
 }

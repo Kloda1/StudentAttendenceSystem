@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  
+
     public function up(): void
     {
         Schema::create('departments', function (Blueprint $table) {
@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('name_en')->nullable();
             $table->foreignId('faculty_id')->nullable()->constrained();
-            $table->foreignId('head_of_department')->nullable()->constrained('users')->nullOnDelete();
+//            $table->foreignId('head_of_department')->nullable()->constrained('users')->nullOnDelete();
             $table->text('description')->nullable();
             $table->integer('total_students')->default(0);
             $table->integer('total_lecturers')->default(0);

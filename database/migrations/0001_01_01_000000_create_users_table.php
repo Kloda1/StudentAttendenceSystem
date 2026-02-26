@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,6 +16,17 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
 
+            $table->foreignId('faculty_id')
+                ->nullable()
+                ->constrained('faculties')
+                ->nullOnDelete();
+
+            $table->foreignId('department_id')
+                ->nullable()
+                ->constrained('departments')
+                ->nullOnDelete();
+
+            $table->tinyInteger('year')->nullable();
 
             $table->string('type')->default('student');
 
@@ -24,12 +34,11 @@ return new class extends Migration
             $table->enum('status', ['pending', 'active', 'blocked', 'suspended'])->default('pending');
 
             $table->string('student_number')->unique()->nullable();
-            // $table->foreignId('department_id')->unique()->nullable();  
-            $table->string('activation_code', 6)->nullable() ;
+            $table->string('activation_code', 6)->nullable();
             $table->timestamp('activation_expires')->nullable();
             $table->enum('role', ['super_admin', 'attendance_monitor', 'course_lecturer']);
-
-            // $table->string('lecturer_id')->unique()->nullable();  
+            $table->string('avatar')->nullable();
+            // $table->string('lecturer_id')->unique()->nullable();
             $table->enum('title', ['professor', 'associate_professor', 'lecturer', 'teaching_assistant'])->nullable();
             $table->boolean('is_active')->default(true);
 

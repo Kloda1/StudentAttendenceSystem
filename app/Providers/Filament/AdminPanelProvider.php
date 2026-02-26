@@ -3,7 +3,9 @@
 namespace App\Providers\Filament;
 
 use Andreia\FilamentNordTheme\FilamentNordThemePlugin;
+use App\Http\Middleware\SetAdminLocale;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -22,6 +24,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Filament\Navigation\UserMenuItem;
 use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -34,11 +37,16 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => '#0066b3',
-                // 'primary' => Color::Amber,
+                'primary' => Color::hex('#1E40AF'),
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->brandLogo(asset('images/logo.png'))
+            ->brandLogoHeight('3rem')
+            ->favicon(asset('images/favicon.ico'))
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->brandName('Student Attendance System ')
             ->pages([
                 Dashboard::class,
             ])
@@ -53,8 +61,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
-                FilamentNordThemePlugin::make(),
-                FilamentBackgroundsPlugin::make(),
+//                FilamentNordThemePlugin::make(),
+//                FilamentBackgroundsPlugin::make(),
                 BreezyCore::make()
                     ->myProfile(),
             ])
@@ -68,18 +76,20 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                SetAdminLocale::class
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->userMenuItems([
+                Action::make('ar')
+                    ->label('🇸🇦 العربية')
+                    ->url(fn() => route('lang.switch', 'ar')),
 
+                Action::make('en')
+                    ->label('🇺🇸 English')
+                    ->url(fn() => route('lang.switch', 'en')),
 
-            ->brandName('Student Attendence System ')
-            // ->favicon(asset('images/favicon.ico'))
-            // ->brandLogo(asset('images/logo.png'))
-            ->brandLogoHeight('3rem')
-
-        ;
+            ]);
     }
 }

@@ -55,4 +55,9 @@ class DepartmentResource extends Resource
             'edit' => EditDepartment::route('/{record}/edit'),
         ];
     }
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()->hasRole('super_admin');
+    }
 }

@@ -28,40 +28,45 @@ class User extends Authenticatable implements FilamentUser
         'password' => 'hashed',
     ];
 
- public function canAccessPanel(\Filament\Panel $panel): bool
-{
-    return $this->email === 'super@admin.com' || $this->hasRole(['super_admin', 'attendance_monitor', 'course_lecturer']);
-}
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        return $this->email === 'super@admin.com' || $this->hasRole(['super_admin', 'attendance_monitor', 'course_lecturer']);
+    }
 
- 
- 
-public function attendances()
-{
-    return $this->hasMany(Attendance::class, 'student_id');
-}
 
-public function devices()
-{
-    return $this->hasMany(StudentDevice::class, 'student_id');
-}
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'student_id');
+    }
 
-public function department()
-{
-    return $this->belongsTo(Department::class);
-}
+    public function devices()
+    {
+        return $this->hasMany(StudentDevice::class, 'student_id');
+    }
 
- public function subjects()
-{
-    return $this->hasMany(Subject::class, 'lecturer_id');
-}
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
 
-public function lectureSessions()
-{
-    return $this->hasMany(LectureSession::class, 'lecturer_id');
-}
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 
- public function headedDepartment()
-{
-    return $this->hasOne(Department::class, 'head_of_department');
-}
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class, 'lecturer_id');
+    }
+
+    public function lectureSessions()
+    {
+        return $this->hasMany(LectureSession::class, 'lecturer_id');
+    }
+
+    public function headedDepartment()
+    {
+        return $this->hasOne(Department::class, 'head_of_department');
+    }
 }
