@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\LectureSessions;
 
+use App\Filament\Resources\LectureSessions\RelationManagers\AttendancesRelationManager;
 use App\Models\LectureSession;
 use App\Models\Subject;
 use Filament\Resources\Resource;
@@ -228,18 +229,29 @@ class LectureSessionResource extends Resource
                     ->url(fn(LectureSession $record) => route('teacher.lecture-session.qr', $record))->openUrlInNewTab()
                     ->visible(fn(LectureSession $record) => $record->status === 'active'),
 
+
+               ActionsAction::make('view_attendance')
+                   ->label(__('attendance.view_attendance'))
+                   ->color('success')
+                    ->icon('heroicon-o-users')
+                    ->url(fn (LectureSession $record) =>
+                        LectureSessionResource::getUrl('view', [
+                            'record' => $record,
+                            'activeRelationManager' => 'attendances'
+                        ])
+                    )
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([]);
     }
 
+
     public static function getRelations(): array
     {
         return [
-
-            // LectureSessionResource\RelationManagers\AttendancesRelationManager::class,
+            AttendancesRelationManager::class,
         ];
     }
-
     public static function getPages(): array
     {
         return [
