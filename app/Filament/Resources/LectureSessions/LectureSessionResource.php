@@ -24,7 +24,7 @@ class LectureSessionResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon =  Heroicon::RectangleStack;
 
-//    protected static ?string $recordTitleAttribute = 'name';
+    //    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 2;
 
@@ -33,9 +33,9 @@ class LectureSessionResource extends Resource
     {
         return $schema
             ->schema([
- 
+
                 Forms\Components\Select::make('subject_id')
-                    ->label('المادة')
+                    ->label(__('lecture-session.subject'))
                     ->relationship('subject', 'name')
                     ->searchable()
                     ->preload()
@@ -46,42 +46,50 @@ class LectureSessionResource extends Resource
                         $set('lecturer_id', $subject?->lecturer_id ?? auth()->id());
                     }),
                 Forms\Components\Select::make('hall_id')
+                    ->label(__('lecture-session.hall'))
                     ->relationship('hall', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
                 Forms\Components\DatePicker::make('session_date')
+                    ->label(__('lecture-session.session_date'))
                     ->required(),
                 Forms\Components\TimePicker::make('start_time')
+                    ->label(__('lecture-session.start_time'))
                     ->required(),
                 Forms\Components\TimePicker::make('end_time')
+                    ->label(__('lecture-session.end_time'))
                     ->required(),
                 Forms\Components\Select::make('status')
+                    ->label(__('lecture-session.status'))
                     ->options([
-                        'scheduled' => 'مجدولة',
-                        'active' => 'نشطة',
-                        'completed' => 'منتهية',
-                        'cancelled' => 'ملغاة',
+                        'scheduled' => __('lecture-session.status_scheduled'),
+                        'active' => __('lecture-session.status_active'),
+                        'completed' => __('lecture-session.status_completed'),
+                        'cancelled' => __('lecture-session.status_cancelled'),
                     ])
                     ->default('scheduled')
                     ->required(),
                 Forms\Components\Select::make('attendance_mode')
+                    ->label(__('lecture-session.attendance_mode'))
                     ->options([
-                        'qr_only' => 'QR فقط',
-                        'qr_otp' => 'QR + OTP',
-                        'manual' => 'يدوي',
+                        'qr_only' => __('lecture-session.mode_qr_only'),
+                        'qr_otp' => __('lecture-session.mode_qr_otp'),
+                        'manual' => __('lecture-session.mode_manual'),
                     ])
                     ->default('qr_otp')
                     ->required(),
                 Forms\Components\TextInput::make('qr_refresh_rate')
+                    ->label(__('lecture-session.qr_refresh_rate'))
                     ->numeric()
                     ->default(40)
-                    ->suffix('ثانية'),
+                    ->suffix(__('lecture-session.seconds')),
                 Forms\Components\Textarea::make('notes')
+                    ->label(__('lecture-session.notes'))
                     ->nullable(),
- 
+
                 Forms\Components\Select::make('lecturer_id')
-                    ->label('المحاضر')
+                    ->label(__('lecture-session.lecturer'))
                     ->relationship('lecturer', 'name')
                     ->searchable()
                     ->preload()
@@ -96,18 +104,27 @@ class LectureSessionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('subject.name')
+                    ->label(__('lecture-session.subject'))
+
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('hall.name')
+                    ->label(__('lecture-session.hall'))
+
                     ->searchable(),
                 Tables\Columns\TextColumn::make('session_date')
+                    ->label(__('lecture-session.session_date'))
+
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_time')
+                    ->label(__('lecture-session.start_time'))
                     ->time(),
                 Tables\Columns\TextColumn::make('end_time')
+                    ->label(__('lecture-session.end_time'))
                     ->time(),
                 Tables\Columns\BadgeColumn::make('status')
+                    ->label(__('lecture-session.status'))
                     ->colors([
                         'warning' => 'scheduled',
                         'success' => 'active',
@@ -115,25 +132,28 @@ class LectureSessionResource extends Resource
                         'danger' => 'cancelled',
                     ]),
                 Tables\Columns\TextColumn::make('actual_attendance')
-                    ->label('الحضور الفعلي'),
+                    ->label(__('lecture-session.actual_attendance')),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('subject')
+                    ->label(__('lecture-session.subject'))
                     ->relationship('subject', 'name'),
+
                 Tables\Filters\SelectFilter::make('status')
+                    ->label(__('lecture-session.status'))
                     ->options([
-                        'scheduled' => 'مجدولة',
-                        'active' => 'نشطة',
-                        'completed' => 'منتهية',
-                        'cancelled' => 'ملغاة',
+                        'scheduled' => __('lecture-session.status_scheduled'),
+                        'active' => __('lecture-session.status_active'),
+                        'completed' => __('lecture-session.status_completed'),
+                        'cancelled' => __('lecture-session.status_cancelled'),
                     ]),
             ])
             ->actions([
                 \Filament\Actions\Action::make('start')
-                    ->label('بدء الجلسة')
+                    ->label(__('lecture-session.start_session'))
                     ->icon('heroicon-o-play')
                     ->color('success')
- 
+
                     ->action(function (LectureSession $record) {
 
                         $otp = random_int(100000, 999999);
@@ -143,25 +163,24 @@ class LectureSessionResource extends Resource
                             'actual_start' => now(),
                             'session_otp' => $otp
                         ]);
-
                     })
-                    ->visible(fn (LectureSession $record) => $record->status === 'scheduled'),
+                    ->visible(fn(LectureSession $record) => $record->status === 'scheduled'),
 
                 \Filament\Actions\Action::make('end')
-                    ->label('إنهاء الجلسة')
+                    ->label(__('lecture-session.end_session'))
                     ->icon('heroicon-o-stop')
                     ->color('danger')
                     ->action(function (LectureSession $record) {
                         $record->update(['status' => 'completed', 'actual_end' => now()]);
                     })
-                    ->visible(fn (LectureSession $record) => $record->status === 'active'),
+                    ->visible(fn(LectureSession $record) => $record->status === 'active'),
 
                 ActionsAction::make('view_qr')
-                    ->label('عرض QR')
+                    ->label(__('lecture-session.view_qr'))
                     ->icon('heroicon-o-qr-code')
-                    ->url(fn (LectureSession $record) => route('teacher.lecture-session.qr', $record))                    ->openUrlInNewTab()
-                    ->visible(fn (LectureSession $record) => $record->status === 'active'),
- 
+                    ->url(fn(LectureSession $record) => route('teacher.lecture-session.qr', $record))->openUrlInNewTab()
+                    ->visible(fn(LectureSession $record) => $record->status === 'active'),
+
             ])
             ->bulkActions([]);
     }

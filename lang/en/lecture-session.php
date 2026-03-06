@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'subject' => 'Subject',
+    'hall' => 'Hall',
+    'session_date' => 'Session Date',
+    'start_time' => 'Start Time',
+    'end_time' => 'End Time',
+    'status' => 'Status',
+    'status_scheduled' => 'Scheduled',
+    'status_active' => 'Active',
+    'status_completed' => 'Completed',
+    'status_cancelled' => 'Cancelled',
+    'attendance_mode' => 'Attendance Mode',
+    'mode_qr_only' => 'QR Only',
+    'mode_qr_otp' => 'QR + OTP',
+    'mode_manual' => 'Manual',
+    'qr_refresh_rate' => 'QR Refresh Rate',
+    'seconds' => 'seconds',
+    'notes' => 'Notes',
+    'lecturer' => 'Lecturer',
+    'actual_attendance' => 'Actual Attendance',
+    'start_session' => 'Start Session',
+    'end_session' => 'End Session',
+    'view_qr' => 'View QR',
+];

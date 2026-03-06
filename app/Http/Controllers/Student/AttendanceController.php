@@ -30,13 +30,13 @@ class AttendanceController extends Controller
         $user = User::where('student_number', $request->student_number)->first();
 
         if (!$user) {
-            return back()->withErrors(['student_number' => 'الطالب غير موجود']);
+            return back()->withErrors(['student_number' => __('student.not_found')]);
         }
 
         $session = LectureSession::find($sessionId);
 
         if (!$session || $session->session_otp != $request->otp) {
-            return back()->withErrors(['otp' => 'رمز التحقق غير صحيح']);
+            return back()->withErrors(['otp' => __('student.invalid_otp')]);
         }
 
         Attendance::create([
@@ -45,7 +45,7 @@ class AttendanceController extends Controller
             'attendance_time' => now()
         ]);
 
-        return redirect('/student')->with('success', 'تم تسجيل الحضور');
+        return redirect('/student')->with('success', __('student.attendance_recorded'));
     }
 
 
@@ -92,7 +92,7 @@ class AttendanceController extends Controller
     public function scan(Request $request, LectureSession $session)
     {
         if ($session->status !== 'active') {
-            abort(403, 'الجلسة غير نشطة');
+            abort(403, __('session.not_active'));
         }
 
         return redirect()->route('student.attendance.verify.form', [
@@ -114,17 +114,17 @@ class AttendanceController extends Controller
         $student = User::where('student_number', $request->student_number)->first();
 
         if (!$student) {
-            return back()->with('error', 'الطالب غير موجود');
+            return back()->with('error', __('student.not_found'));
         }
 
         $session = LectureSession::find($sessionId);
 
         if (!$session) {
-            return back()->with('error', 'الجلسة غير موجودة');
+            return back()->with('error', __('session.not_found'));
         }
 
         if ($session->session_otp != $request->otp) {
-            return back()->with('error', 'OTP غير صحيح');
+            return back()->with('error', __('student.invalid_otp'));
         }
 
         Attendance::create([
@@ -133,6 +133,6 @@ class AttendanceController extends Controller
             'attendance_time' => now()
         ]);
 
-        return back()->with('success', 'تم تسجيل الحضور');
+        return back()->with('success', __('student.attendance_recorded'));
     }
 }

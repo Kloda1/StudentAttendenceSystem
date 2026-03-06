@@ -30,5 +30,10 @@ return [
 
     'active' => 'نشطة',
     'none' => 'لا يوجد',
+    'go_admin_panel' => 'دخول لوحة الإدارة',
+    'qr_code' => 'رمز الاستجابة السريعة',
+    'session_qr' => 'QR Code الجلسة',
+    'auto_refresh' => 'يحدث تلقائياً كل :seconds ثانية',
+    'verification_code' => 'رمز التحقق',
 
 ];

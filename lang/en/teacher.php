@@ -30,5 +30,9 @@ return [
 
     'active' => 'Active',
     'none' => 'None',
-
+    'go_admin_panel' => 'Go to Admin Panel',
+    'qr_code' => 'QR Code',
+    'session_qr' => 'Session QR Code',
+    'auto_refresh' => 'Auto refreshes every :seconds seconds',
+    'verification_code' => 'Verification Code',
 ];

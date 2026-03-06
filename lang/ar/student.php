@@ -35,4 +35,16 @@ return [
     'student_dashboard' => 'لوحة الطالب',
     'arabic' => 'العربية',
     'english' => 'الإنكليزية',
+
+    'not_found' => 'الطالب غير موجود',
+    'invalid_otp' => 'رمز التحقق غير صحيح',
+    'attendance_recorded' => 'تم تسجيل الحضور',
+    'current_password_incorrect' => 'كلمة المرور الحالية غير صحيحة',
+    'updated_successfully' => 'تم تحديث الملف الشخصي بنجاح',
+
+    'confirm_attendance' => 'تأكيد الحضور',
+    'student_number' => 'الرقم الجامعي',
+    'verification_code' => 'رمز التحقق',
+    'verify' => 'تحقق',
+
 ];

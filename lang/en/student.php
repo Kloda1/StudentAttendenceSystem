@@ -32,4 +32,14 @@ return [
     'student_dashboard' => 'Student Dashboard',
     'arabic' => 'Arabic',
     'english' => 'English',
+
+    'not_found' => 'Student not found',
+    'invalid_otp' => 'Invalid OTP code',
+    'attendance_recorded' => 'Attendance recorded',
+    'current_password_incorrect' => 'Current password is incorrect',
+    'updated_successfully' => 'Profile updated successfully',
+    'confirm_attendance' => 'Confirm Attendance',
+    'student_number' => 'Student Number',
+    'verification_code' => 'Verification Code',
+    'verify' => 'Verify',
 ];

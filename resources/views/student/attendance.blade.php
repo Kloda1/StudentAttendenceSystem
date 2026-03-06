@@ -1,7 +1,6 @@
-
 @extends('student.layout')
 
-@section('title','تأكيد الحضور')
+@section('title', __('student.confirm_attendance'))
 
 @section('content')
 
@@ -23,7 +22,7 @@
 
     <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">
-            الرقم الجامعي
+           {{ __('student.student_number') }}
         </label>
 
         <input
@@ -35,7 +34,7 @@
 
     <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">
-            رمز التحقق
+        {{ __('student.verification_code') }}
         </label>
 
         <input
@@ -49,13 +48,10 @@
         type="submit"
         class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
 
-        تحقق
+          {{ __('student.verify') }}
     </button>
 
 </form>
 
 @endsection
 
-
-
-  

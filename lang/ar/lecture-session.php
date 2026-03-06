@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'subject' => 'المادة',
+    'hall' => 'القاعة',
+    'session_date' => 'تاريخ الجلسة',
+    'start_time' => 'وقت البدء',
+    'end_time' => 'وقت الانتهاء',
+    'status' => 'الحالة',
+    'status_scheduled' => 'مجدولة',
+    'status_active' => 'نشطة',
+    'status_completed' => 'منتهية',
+    'status_cancelled' => 'ملغاة',
+    'attendance_mode' => 'طريقة الحضور',
+    'mode_qr_only' => 'QR فقط',
+    'mode_qr_otp' => 'QR + OTP',
+    'mode_manual' => 'يدوي',
+    'qr_refresh_rate' => 'معدل تحديث QR',
+    'seconds' => 'ثانية',
+    'notes' => 'ملاحظات',
+    'lecturer' => 'المحاضر',
+    'actual_attendance' => 'الحضور الفعلي',
+    'start_session' => 'بدء الجلسة',
+    'end_session' => 'إنهاء الجلسة',
+    'view_qr' => 'عرض QR',
+];
