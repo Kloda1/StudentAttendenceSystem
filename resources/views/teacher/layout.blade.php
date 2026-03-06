@@ -68,9 +68,13 @@
                 {{ __('teacher.profile_title') }}
             </a>
 
+
+
+     
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button class="w-full text-right px-4 py-2 rounded hover:bg-white/10">
+                <!-- <button class="w-full text-right px-4 py-2 rounded hover:bg-white/10"> -->
+                <button class="w-full px-4 py-2 rounded hover:bg-white/10 {{ app()->getLocale() == 'ar' ? 'text-right' : 'text-left' }}">
                     {{ __('teacher.logout') }}
                 </button>
             </form>

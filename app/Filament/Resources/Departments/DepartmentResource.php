@@ -22,7 +22,37 @@ class DepartmentResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Department';
+    // protected static ?string $recordTitleAttribute = 'Department';
+
+    protected static ?string $recordTitleAttribute = 'id';
+
+ 
+ 
+    public static function getModelLabel(): string
+    {
+        return __('department.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('department.plural');
+    }
+
+    public static function getCreatePageTitle(): string
+    {
+        return __('department.create_title');
+    }
+
+    public static function getCreateActionLabel(): string
+    {
+        return __('department.create');
+    }
+
+    public static function getRecordTitle($record): ?string
+    {
+        return __('department.record_title') . ' #' . $record->id;
+    }
+
 
     public static function form(Schema $schema): Schema
     {

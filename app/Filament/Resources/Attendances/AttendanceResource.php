@@ -22,7 +22,35 @@ class AttendanceResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Attendance';
+    // protected static ?string $recordTitleAttribute = 'Attendance';
+    protected static ?string $recordTitleAttribute = 'id';
+
+  
+    public static function getModelLabel(): string
+    {
+        return __('attendance.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('attendance.plural');
+    }
+
+    public static function getCreatePageTitle(): string
+    {
+        return __('attendance.create_title');
+    }
+
+    public static function getCreateActionLabel(): string
+    {
+        return __('attendance.create');
+    }
+
+    public static function getRecordTitle($record): ?string
+    {
+        return __('attendance.record_title') . ' #' . $record->id;
+    }
+    
 
     public static function form(Schema $schema): Schema
     {

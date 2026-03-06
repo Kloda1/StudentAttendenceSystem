@@ -22,8 +22,21 @@ class AuditLogResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'AuditLog';
+    protected static ?string $recordTitleAttribute =  "id";
 
+    public static function getRecordTitle($record): ?string
+    {
+        return __('audit_logs.record_title') . ' #' . $record->id;
+    }
+    public static function getModelLabel(): string
+    {
+        return __('audit_logs.singular');
+    }
+    
+    public static function getPluralModelLabel(): string
+    {
+        return __('audit_logs.plural');
+    }
     public static function form(Schema $schema): Schema
     {
         return AuditLogForm::configure($schema);

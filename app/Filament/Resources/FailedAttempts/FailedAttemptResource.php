@@ -22,7 +22,34 @@ class FailedAttemptResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'FailedAttempt';
+    // protected static ?string $recordTitleAttribute = 'FailedAttempt';
+    protected static ?string $recordTitleAttribute = 'id';
+    
+    public static function getModelLabel(): string
+    {
+        return __('failed_attempt.singular');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('failed_attempt.plural');
+    }
+
+    public static function getCreatePageTitle(): string
+    {
+        return __('failed_attempt.create_title');
+    }
+
+    public static function getCreateActionLabel(): string
+    {
+        return __('failed_attempt.create');
+    }
+
+    public static function getRecordTitle($record): ?string
+    {
+        return __('failed_attempt.record_title') . ' #' . $record->id;
+    }
+
 
     public static function form(Schema $schema): Schema
     {

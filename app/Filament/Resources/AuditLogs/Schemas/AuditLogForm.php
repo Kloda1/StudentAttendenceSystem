@@ -12,28 +12,41 @@ class AuditLogForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextInput::make('user_id')
-                    ->numeric()
-                    ->default(null),
-                TextInput::make('user_type')
-                    ->default(null),
-                TextInput::make('action')
-                    ->required(),
-                Textarea::make('description')
-                    ->default(null)
-                    ->columnSpanFull(),
-                TextInput::make('ip_address')
-                    ->default(null),
-                TextInput::make('location')
-                    ->default(null),
-                Select::make('severity')
-                    ->options(['info' => 'Info', 'warning' => 'Warning', 'error' => 'Error', 'critical' => 'Critical'])
-                    ->default('info')
-                    ->required(),
-                Textarea::make('metadata')
-                    ->default(null)
-                    ->columnSpanFull(),
-            ]);
+        ->components([
+            TextInput::make('user_id')
+                ->label(__('audit_logs.user_id'))
+                ->numeric()
+                ->default(null),
+            TextInput::make('user_type')
+                ->label(__('audit_logs.user_type'))
+                ->default(null),
+            TextInput::make('action')
+                ->label(__('audit_logs.action'))
+                ->required(),
+            Textarea::make('description')
+                ->label(__('audit_logs.description'))
+                ->default(null)
+                ->columnSpanFull(),
+            TextInput::make('ip_address')
+                ->label(__('audit_logs.ip_address'))
+                ->default(null),
+            TextInput::make('location')
+                ->label(__('audit_logs.location'))
+                ->default(null),
+            Select::make('severity')
+                ->label(__('audit_logs.severity'))
+                ->options([
+                    'info'     => __('audit_logs.severity_info'),
+                    'warning'  => __('audit_logs.severity_warning'),
+                    'error'    => __('audit_logs.severity_error'),
+                    'critical' => __('audit_logs.severity_critical'),
+                ])
+                ->default('info')
+                ->required(),
+            Textarea::make('metadata')
+                ->label(__('audit_logs.metadata'))
+                ->default(null)
+                ->columnSpanFull(),
+        ]);
     }
 }

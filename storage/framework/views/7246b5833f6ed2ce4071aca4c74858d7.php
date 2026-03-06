@@ -74,6 +74,9 @@
 
             </a>
 
+
+
+     
             <form method="POST" action="<?php echo e(route('logout')); ?>">
                 <?php echo csrf_field(); ?>
                 <button class="w-full text-right px-4 py-2 rounded hover:bg-white/10">
