@@ -79,7 +79,8 @@
      
             <form method="POST" action="<?php echo e(route('logout')); ?>">
                 <?php echo csrf_field(); ?>
-                <button class="w-full text-right px-4 py-2 rounded hover:bg-white/10">
+                <!-- <button class="w-full text-right px-4 py-2 rounded hover:bg-white/10"> -->
+                <button class="w-full px-4 py-2 rounded hover:bg-white/10 <?php echo e(app()->getLocale() == 'ar' ? 'text-right' : 'text-left'); ?>">
                     <?php echo e(__('teacher.logout')); ?>
 
                 </button>

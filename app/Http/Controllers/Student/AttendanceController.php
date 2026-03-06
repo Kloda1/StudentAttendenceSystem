@@ -51,22 +51,23 @@ class AttendanceController extends Controller
 
     public function showQr(LectureSession $session)
     {
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        if (!$user) {
-            abort(403);
-        }
+        // if (!$user) {
+        //     abort(403);
+        // }
 
         if ($session->status !== 'active') {
             abort(403);
         }
 
-        if (
-            !$user->hasRole('super_admin') &&
-            $user->id !== $session->lecturer_id
-        ) {
-            abort(403);
-        }
+        // if (
+        //     !$user->hasRole('super_admin') &&
+        //     $user->id !== $session->lecturer_id
+        // ) 
+        // {
+        //     abort(403);
+        // }
 
         $otp = $session->session_otp;
 
@@ -74,9 +75,11 @@ class AttendanceController extends Controller
             'session_id' => $session->id
         ]);
 
-        $tokenData = route('student.attendance.verify.form', [
-            'session' => $session->id
-        ]);
+        // $tokenData = route('student.attendance.verify.form', [
+
+        //     'session' => $session->id
+        // ]);
+            $tokenData = config('app.url') . '/student/attendance/' . $session->id;
         $writer = new PngWriter();
         $qrCode = new \Endroid\QrCode\QrCode($tokenData);
 
@@ -102,9 +105,39 @@ class AttendanceController extends Controller
 
 
 
-
-
     public function store(Request $request, $sessionId)
+    {
+        $request->validate([
+            'student_number' => 'required',
+            'otp' => 'required'
+        ]);
+    
+        $student = User::where('student_number', $request->student_number)->first();
+    
+        if (!$student) {
+            return back()->with('error', __('student.not_found'));
+        }
+    
+        $session = LectureSession::find($sessionId);
+    
+        if (!$session) {
+            return back()->with('error', __('session.not_found'));
+        }
+    
+        if ($session->session_otp != $request->otp) {
+            return back()->with('error', __('student.invalid_otp'));
+        }
+    
+        Attendance::create([
+            'student_id' => $student->id,
+            'lecture_session_id' => $sessionId,
+            'attendance_time' => now()
+        ]);
+    
+        return back()->with('success', __('student.attendance_recorded'));
+    }
+
+    public function storeOtp(Request $request, $sessionId)
     {
         $request->validate([
             'student_number' => 'required',

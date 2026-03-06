@@ -15,7 +15,7 @@
 @endif
 
 <form method="POST"
-      action="{{ route('student.attendance.store', ['session' => session('verify_session')]) }}"
+action="{{ route('student.attendance.store', ['session' => $sessionId]) }}"
       class="space-y-6 max-w-md">
 
     @csrf

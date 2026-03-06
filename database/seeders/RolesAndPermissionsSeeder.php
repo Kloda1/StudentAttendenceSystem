@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Department;
 use App\Models\Faculty;
+use App\Models\Hall;
+use App\Models\Subject;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -123,6 +125,61 @@ class RolesAndPermissionsSeeder extends Seeder
             'view_audit_logs',
         ];
 
+        Hall::create([  
+                      
+                'code'            => 'HALL-001',
+                'name'            => 'القاعة الرئيسية',
+                'floor'           => 1,
+                'capacity'        => 100,
+                'has_projector'   => true,
+                'has_computer'    => true,
+                'network_ssid'    => 'MainHall-WiFi',
+                'ip_range_start'  => '192.168.1.100',
+                'ip_range_end'    => '192.168.1.200',
+                'is_active'       => true,
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ] ,
+            [
+                'code'            => 'HALL-003',
+                'name'            => 'قاعة 2',
+                'floor'           => 3,
+                'capacity'        => 30,
+                'has_projector'   => false,
+                'has_computer'    => true,
+                'network_ssid'    => 'Lab-Net',
+                'ip_range_start'  => '10.0.0.1',
+                'ip_range_end'    => '10.0.0.254',
+                'is_active'       => true,
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ]
+        );
+        Subject::create([  
+            
+                'code'           => 'P101',
+                'name'           => 'programming 1',
+                'department_id'  => 1,       
+
+                'credit_hours'   => 3,
+                'level'          => 1,
+                'semester'       => 1,
+                'is_active'      => true,
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ] ,
+            [
+                'code'           => 'P102',
+                'name'           => 'programming 2',
+                 'department_id'  => 1,       
+                'credit_hours'   => 3,
+                'level'          => 1,
+                'semester'       => 1,
+                'is_active'      => true,
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ],
+        );
 
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);

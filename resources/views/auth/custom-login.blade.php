@@ -37,14 +37,14 @@
 
             <a href="{{ route('lang.switch',['locale'=>'ar']) }}"
                class="hover:underline">
-                العربية
+               {{ __('auth.arabic') }}
             </a>
 
             <span>|</span>
 
             <a href="{{ route('lang.switch',['locale'=>'en']) }}"
                class="hover:underline">
-                English
+               {{ __('auth.english') }}
             </a>
 
         </div>
@@ -109,11 +109,11 @@
 
                 <div class="flex flex-wrap gap-4">
 
-                    <label class="inline-flex items-center">
+                    <!-- <label class="inline-flex items-center">
                         <input type="radio" name="role" value="student"
                                class="form-radio text-blue-600">
                         <span class="mr-2">{{ __('auth.student') }}</span>
-                    </label>
+                    </label> -->
 
                     <label class="inline-flex items-center">
                         <input type="radio" name="role" value="lecturer"

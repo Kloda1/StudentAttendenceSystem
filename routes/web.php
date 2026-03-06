@@ -28,7 +28,7 @@ Route::get('/login', [CustomLoginController::class, 'showLoginForm'])->name('log
 Route::post('/login', [CustomLoginController::class, 'login']);
 
 Route::post('/logout', [CustomLoginController::class, 'logout'])
-    ->middleware('auth')
+    // ->middleware('auth')
     ->name('logout');
 
 
@@ -40,9 +40,7 @@ Route::get('/attendance', [AttendanceController::class, 'index'])
 
 Route::post(
     '/student/attendance/scan/{session}',
-    [AttendanceController::class, 'scan']
-)
-    ->name('student.attendance.scan');
+    [AttendanceController::class, 'scan'])  ->name('student.attendance.scan');
 
 //Route::get('/student/attendance/verify-otp/{session}', function ($session) {
 Route::get('/student/attendance/{session}', function ($session) {
@@ -57,49 +55,35 @@ Route::get('/student/attendance/{session}', function ($session) {
 Route::get(
     '/lecture-session/{session}/qr',
     [AttendanceController::class, 'showQr']
-)->middleware(['auth', 'throttle:30,1'])
+)
+// ->middleware([  'throttle:30,1'])
     ->name('teacher.lecture-session.qr');
 
-Route::middleware(['auth', 'role:student'])
-    ->prefix('student')
+
+
+    Route::prefix('student')
     ->name('student.')
     ->group(function () {
-
+    
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
-
-        //        Route::get('/attendance', [AttendanceController::class, 'index'])
-        //            ->name('attendance');
-
-        Route::post('/attendance/scan', [AttendanceController::class, 'scan'])
-            ->name('attendance.scan');
-
-        // Route::post('/attendance/store/{session}', [AttendanceController::class, 'scan'])
-        //     ->name('attendance.store');
-
-
-        Route::get(
-            '/attendance/scan/{session}',
-            [AttendanceController::class, 'scan']
-        )
-            ->name('attendance.scan');
-
+    
+        Route::get('/attendance/{session}', function ($session) {
+    
+            return view('student.attendance.verify-otp', [
+                'sessionId' => $session
+            ]);
+    
+        })->name('attendance.verify.form');
+    
         Route::post(
             '/attendance/store/{session}',
             [AttendanceController::class, 'store']
-        )
-            ->name('attendance.store');
-
-
-        Route::get('/profile', [ProfileController::class, 'edit'])
-            ->name('profile');
-
-        Route::put('/profile', [ProfileController::class, 'update'])
-            ->name('profile.update');
+        )->name('attendance.store');
+    
     });
 
-
-
+ 
 Route::middleware(['auth', 'role:course_lecturer'])
     ->prefix('teacher')
     ->name('teacher.')
@@ -132,7 +116,7 @@ Route::get('/', function () {
         $user = auth()->user();
 
         return match (true) {
-            $user->hasRole('student') => redirect('/student'),
+            // $user->hasRole('student') => redirect('/student'),
             $user->hasRole('course_lecturer') => redirect('/teacher'),
             default => redirect('/login')
         };

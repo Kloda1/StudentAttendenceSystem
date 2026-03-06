@@ -1,6 +1,8 @@
 <?php
 return [
-
+    'failed'   => 'These credentials do not match our records.',
+    'inactive' => 'Your account is inactive.',
+    'unauthorized_role' => 'You do not have the required role.',
     'login_title' => 'Login',
     'email' => 'Email',
     'password' => 'Password',
@@ -9,7 +11,7 @@ return [
     'role_optional' => 'Login as (optional)',
     'student' => 'Student',
     'lecturer' => 'Lecturer',
-    'admin' => 'Admin / Monitor',
+    'admin' => 'Admin',
     'no_account' => 'Don’t have an account?',
     'create_account' => 'Create new account',
     'student_number'=>'Student Number',

@@ -7,7 +7,8 @@ use App\Http\Controllers\Student\AttendanceController;
 use App\Http\Controllers\Student\ProfileController;
 
 
-Route::middleware(['auth', 'role:student'])
+// Route::middleware(['auth', 'role:student'])
+Route::middleware(['role:student'])
     ->prefix('student')
     ->name('student.')
     ->group(function () {

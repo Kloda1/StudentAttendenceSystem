@@ -69,13 +69,13 @@ class CustomLoginController extends Controller
         $user = User::where('student_number', $request->student_number)->first();
 
         if (!$user) {
-            return back()->withErrors(['student_number' => 'الطالب غير موجود']);
+            return back()->withErrors(['student_number' => __('student.not_found')]);
         }
 
         $session = LectureSession::find($sessionId);
 
         if (!$session || $session->session_otp != $request->otp) {
-            return back()->withErrors(['otp' => 'رمز التحقق غير صحيح']);
+            return back()->withErrors(['otp' => __('student.invalid_otp')]);
         }
 
         Attendance::create([
@@ -84,7 +84,7 @@ class CustomLoginController extends Controller
             'attendance_time' => now()
         ]);
 
-        return redirect('/student')->with('success', 'تم تسجيل الحضور');
+        return redirect('/student')->with('success', __('student.attendance_recorded'));
     }
 
 
@@ -121,7 +121,7 @@ class CustomLoginController extends Controller
         if (!$user->is_active ?? true) {
             Auth::logout();
             return back()->withErrors([
-                'email' => 'الحساب غير مفعل.',
+                'email' => __('auth.failed'),
             ]);
         }
 
@@ -139,7 +139,7 @@ class CustomLoginController extends Controller
                 Auth::logout();
 
                 return back()->withErrors([
-                    'role' => 'ليس لديك هذه الصلاحية.',
+                    'role' => __('auth.unauthorized_role'),
                 ]);
             }
         }

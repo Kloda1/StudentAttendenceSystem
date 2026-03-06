@@ -43,7 +43,7 @@
 
             <p class="text-sm opacity-80 mt-1">
                 {{ __('student.welcome') }}
-                {{ auth()->user()->name }}
+                <!-- {{ auth()->user()->name }} -->
             </p>
 
         </div>

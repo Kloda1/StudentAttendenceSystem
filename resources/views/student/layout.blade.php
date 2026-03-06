@@ -44,8 +44,7 @@
 
             <p class="text-sm opacity-80 mt-1">
                 {{ __('student.greeting') }}
-                {{ auth()->user()->name }}
-            </p>
+             </p>
 
         </div>
  

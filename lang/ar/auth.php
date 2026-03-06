@@ -2,7 +2,9 @@
 return [
 
 
-
+    'failed'   => 'بيانات الدخول غير صحيحة.',
+    'inactive' => 'الحساب غير مفعل.',
+    'unauthorized_role' => 'ليس لديك هذه الصلاحية.',
     'remember'=>'تذكرني',
     'register'=>'إنشاء حساب جديد',
     'register_title'=>'إنشاء حساب',

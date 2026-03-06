@@ -27,7 +27,45 @@ class LectureSessionResource extends Resource
     //    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 2;
+    public static function getModelLabel(): string
+    {
+        return __('lecture-session.singular');
+    }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('lecture-session.plural');
+    }
+
+    public static function getCreatePageTitle(): string
+    {
+        return __('lecture-session.create_title');
+    }
+
+    public static function getCreateActionLabel(): string
+    {
+        return __('lecture-session.create');
+    }
+
+    public static function getRecordTitle($record): ?string
+    {
+        return __('lecture-session.record_title') . ' #' . $record->id;
+    }
+
+    // public static function form(Schema $schema): Schema
+    // {
+    //     return LectureSessionForm::configure($schema);
+    // }
+
+    // public static function infolist(Schema $schema): Schema
+    // {
+    //     return LectureSessionInfolist::configure($schema);
+    // }
+
+    // public static function table(Table $table): Table
+    // {
+    //     return LectureSessionsTable::configure($table);
+    // }
 
     public static function form(Schema $schema): Schema
     {
@@ -123,14 +161,23 @@ class LectureSessionResource extends Resource
                 Tables\Columns\TextColumn::make('end_time')
                     ->label(__('lecture-session.end_time'))
                     ->time(),
+                // Tables\Columns\BadgeColumn::make('status')
+                //     ->label(__('lecture-session.status'))
+                //     ->colors([
+                //         'warning' => 'scheduled',
+                //         'success' => 'active',
+                //         'secondary' => 'completed',
+                //         'danger' => 'cancelled',
+                //     ]),
                 Tables\Columns\BadgeColumn::make('status')
-                    ->label(__('lecture-session.status'))
-                    ->colors([
-                        'warning' => 'scheduled',
-                        'success' => 'active',
-                        'secondary' => 'completed',
-                        'danger' => 'cancelled',
-                    ]),
+    ->label(__('lecture-session.status'))
+    ->colors([
+        'warning' => 'scheduled',
+        'success' => 'active',
+        'secondary' => 'completed',
+        'danger' => 'cancelled',
+    ])
+    ->formatStateUsing(fn ($state) => __("lecture-session.status_{$state}")),
                 Tables\Columns\TextColumn::make('actual_attendance')
                     ->label(__('lecture-session.actual_attendance')),
             ])

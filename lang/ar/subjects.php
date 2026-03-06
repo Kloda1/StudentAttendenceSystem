@@ -1,14 +1,28 @@
 <?php
 
 return [
-    'title' => 'المواد الدراسية',
-    'code' => 'الرمز',
-    'name' => 'اسم المادة',
-    'department' => 'القسم',
-    'credit_hours' => 'الساعات',
-    'level' => 'المستوى',
-    'semester' => 'الفصل',
-    'active' => 'مفعل',
-    'arabic' => 'العربية',
-    'english' => 'الإنكليزية',
+     
+    'singular'        => 'مادة',
+    'plural'          => 'المواد',
+    'create'          => 'إضافة',
+    'create_title'    => 'إضافة مادة',
+    'record_title'    => 'سجل مادة',
+
+     'code'            => 'رمز المادة',
+    'name'            => 'اسم المادة',
+    'lecturer_id'     => 'معرف المحاضر',
+    'department_id'   => 'معرف القسم',
+    'credit_hours'    => 'الساعات المعتمدة',
+    'level'           => 'المستوى',
+    'semester'        => 'الفصل الدراسي',
+    'is_active'       => 'نشط',
+    'created_at'      => 'تاريخ الإنشاء',
+    'updated_at'      => 'تاريخ التحديث',
+
+     
+    'view'            => 'عرض',
+    'edit'            => 'تعديل',
+    'delete_selected' => 'حذف المحدد',
+ 
+    'not_available'   => '-',
 ];
