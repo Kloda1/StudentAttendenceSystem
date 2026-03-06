@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\Student\AttendanceController;
 use App\Http\Controllers\Student\ProfileController;
 use App\Http\Controllers\Student\DashboardController;
-
+use App\Models\LectureSession;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
 
 Route::get('/lang/{locale}', function ($locale) {
@@ -17,7 +19,6 @@ Route::get('/lang/{locale}', function ($locale) {
     session(['locale' => $locale]);
 
     return back();
-
 })->name('lang.switch');
 
 
@@ -32,6 +33,33 @@ Route::post('/logout', [CustomLoginController::class, 'logout'])
 
 
 
+
+Route::get('/attendance', [AttendanceController::class, 'index'])
+
+    ->name('student.attendance');
+
+Route::post(
+    '/student/attendance/scan/{session}',
+    [AttendanceController::class, 'scan']
+)
+    ->name('student.attendance.scan');
+
+//Route::get('/student/attendance/verify-otp/{session}', function ($session) {
+Route::get('/student/attendance/{session}', function ($session) {
+
+    session(['verify_session' => $session]);
+    return view('student.attendance');
+    // return view('student.attendance.verify-otp');
+
+})->name('student.attendance.verify.form');
+
+
+Route::get(
+    '/lecture-session/{session}/qr',
+    [AttendanceController::class, 'showQr']
+)->middleware(['auth', 'throttle:30,1'])
+    ->name('teacher.lecture-session.qr');
+
 Route::middleware(['auth', 'role:student'])
     ->prefix('student')
     ->name('student.')
@@ -40,19 +68,36 @@ Route::middleware(['auth', 'role:student'])
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
 
-        Route::get('/attendance', [AttendanceController::class, 'index'])
-            ->name('attendance');
+        //        Route::get('/attendance', [AttendanceController::class, 'index'])
+        //            ->name('attendance');
 
         Route::post('/attendance/scan', [AttendanceController::class, 'scan'])
             ->name('attendance.scan');
+
+        // Route::post('/attendance/store/{session}', [AttendanceController::class, 'scan'])
+        //     ->name('attendance.store');
+
+
+        Route::get(
+            '/attendance/scan/{session}',
+            [AttendanceController::class, 'scan']
+        )
+            ->name('attendance.scan');
+
+        Route::post(
+            '/attendance/store/{session}',
+            [AttendanceController::class, 'store']
+        )
+            ->name('attendance.store');
+
 
         Route::get('/profile', [ProfileController::class, 'edit'])
             ->name('profile');
 
         Route::put('/profile', [ProfileController::class, 'update'])
             ->name('profile.update');
-
     });
+
 
 
 Route::middleware(['auth', 'role:course_lecturer'])
@@ -68,34 +113,15 @@ Route::middleware(['auth', 'role:course_lecturer'])
 
         Route::put('/profile', [App\Http\Controllers\Teacher\ProfileController::class, 'update'])
             ->name('profile.update');
-
     });
 
 
 
-Route::get('/lecture-session/{session}/qr', function (App\Models\LectureSession $session) {
+Route::get('/departments/{faculty}', function ($faculty) {
 
-    $user = auth()->user();
-
-    if (!$user || ($user->id !== $session->lecturer_id && !$user->hasRole('super_admin'))) {
-        abort(403);
-    }
-
-    $token = $session->tokens()
-        ->where('token_type', 'qr')
-        ->where('expires_at', '>', now())
-        ->first();
-
-    return view('lecture-session.qr', compact('session', 'token'));
-
-})->middleware('auth');
-
-Route::get('/departments/{faculty}', function($faculty){
-
-    return \App\Models\Department::where('faculty_id',$faculty)
-        ->select('id','name')
+    return \App\Models\Department::where('faculty_id', $faculty)
+        ->select('id', 'name')
         ->get();
-
 });
 
 
@@ -113,5 +139,4 @@ Route::get('/', function () {
     }
 
     return redirect('/login');
-
 });

@@ -20,7 +20,7 @@ class SubjectResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::AcademicCap;
 
-    protected static ?string $recordTitleAttribute = 'Subject';
+    protected static ?string $recordTitleAttribute = 'name';
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

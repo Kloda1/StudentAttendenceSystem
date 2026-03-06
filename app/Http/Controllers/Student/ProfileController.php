@@ -32,13 +32,13 @@ class ProfileController extends Controller
 
         if ($request->filled('current_password')) {
             if (!Hash::check($request->current_password, $user->password)) {
-                return back()->withErrors(['current_password' => 'كلمة المرور غير صحيحة']);
+                return back()->withErrors(['current_password' => 'كلمة المرور الحالية غير صحيحة']);
             }
             $user->password = Hash::make($request->new_password);
         }
 
         $user->save();
 
-        return back()->with('success', 'تم');
+        return back()->with('success', 'تم تحديث الملف الشخصي بنجاح');
     }
 }

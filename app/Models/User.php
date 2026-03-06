@@ -27,7 +27,13 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
+    public function canAccessFilament(): bool
+    {
+        return $this->hasAnyRole([
+            'super_admin',
+            'course_lecturer'
+        ]);
+    }
     public function canAccessPanel(\Filament\Panel $panel): bool
     {
         return $this->email === 'super@admin.com' || $this->hasRole(['super_admin', 'attendance_monitor', 'course_lecturer']);

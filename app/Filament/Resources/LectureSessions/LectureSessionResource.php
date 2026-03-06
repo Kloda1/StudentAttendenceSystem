@@ -3,11 +3,14 @@
 namespace App\Filament\Resources\LectureSessions;
 
 use App\Models\LectureSession;
+use App\Models\Subject;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema; // استيراد Schema
+use Filament\Schemas\Schema;
+
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use BackedEnum;
+use Filament\Actions\Action as ActionsAction;
 use Filament\Tables\Table;
 use Filament\Forms;
 use Filament\Tables\Actions\Action;
@@ -21,7 +24,7 @@ class LectureSessionResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon =  Heroicon::RectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'LectureSession';
+//    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 2;
 
@@ -30,13 +33,18 @@ class LectureSessionResource extends Resource
     {
         return $schema
             ->schema([
+ 
                 Forms\Components\Select::make('subject_id')
+                    ->label('المادة')
                     ->relationship('subject', 'name')
                     ->searchable()
                     ->preload()
                     ->required()
                     ->reactive()
-                    ->afterStateUpdated(fn (callable $set) => $set('lecturer_id', null)),
+                    ->afterStateUpdated(function (callable $set, $state) {
+                        $subject = Subject::find($state);
+                        $set('lecturer_id', $subject?->lecturer_id ?? auth()->id());
+                    }),
                 Forms\Components\Select::make('hall_id')
                     ->relationship('hall', 'name')
                     ->searchable()
@@ -71,14 +79,15 @@ class LectureSessionResource extends Resource
                     ->suffix('ثانية'),
                 Forms\Components\Textarea::make('notes')
                     ->nullable(),
-                 Forms\Components\Hidden::make('lecturer_id')
-                    ->default(function (callable $get) {
-                        $subjectId = $get('subject_id');
-                        if ($subjectId) {
-                            return \App\Models\Subject::find($subjectId)?->lecturer_id;
-                        }
-                        return auth()->id();
-                    }),
+ 
+                Forms\Components\Select::make('lecturer_id')
+                    ->label('المحاضر')
+                    ->relationship('lecturer', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->disabled()
+                    ->dehydrated(),
             ]);
     }
 
@@ -120,17 +129,25 @@ class LectureSessionResource extends Resource
                     ]),
             ])
             ->actions([
-                Action::make('start')
+                \Filament\Actions\Action::make('start')
                     ->label('بدء الجلسة')
                     ->icon('heroicon-o-play')
                     ->color('success')
+ 
                     ->action(function (LectureSession $record) {
-                        $record->update(['status' => 'active', 'actual_start' => now()]);
-                        // هنا يمكنك إضافة كود لتوليد QR code و OTP
+
+                        $otp = random_int(100000, 999999);
+
+                        $record->update([
+                            'status' => 'active',
+                            'actual_start' => now(),
+                            'session_otp' => $otp
+                        ]);
+
                     })
                     ->visible(fn (LectureSession $record) => $record->status === 'scheduled'),
 
-                Action::make('end')
+                \Filament\Actions\Action::make('end')
                     ->label('إنهاء الجلسة')
                     ->icon('heroicon-o-stop')
                     ->color('danger')
@@ -139,15 +156,12 @@ class LectureSessionResource extends Resource
                     })
                     ->visible(fn (LectureSession $record) => $record->status === 'active'),
 
-                Action::make('view_qr')
+                ActionsAction::make('view_qr')
                     ->label('عرض QR')
                     ->icon('heroicon-o-qr-code')
-                    ->url(fn (LectureSession $record) => route('lecture-session.qr', $record))
-                    ->openUrlInNewTab()
+                    ->url(fn (LectureSession $record) => route('teacher.lecture-session.qr', $record))                    ->openUrlInNewTab()
                     ->visible(fn (LectureSession $record) => $record->status === 'active'),
-
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+ 
             ])
             ->bulkActions([]);
     }

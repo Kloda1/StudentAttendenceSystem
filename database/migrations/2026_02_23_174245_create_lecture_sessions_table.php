@@ -14,6 +14,7 @@ return new class extends Migration
             $table->foreignId('lecturer_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('hall_id')->constrained()->cascadeOnDelete();
             $table->date('session_date');
+            $table->string('session_otp', 6)->nullable();
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamp('actual_start')->nullable();

@@ -29,8 +29,7 @@
 
 <div class="flex min-h-screen">
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gradient-to-b from-blue-700 to-blue-900 text-white p-6 flex flex-col">
+     <aside class="w-64 bg-gradient-to-b from-blue-700 to-blue-900 text-white p-6 flex flex-col">
 
         <div class="text-center mb-8">
 
@@ -48,7 +47,7 @@
             </p>
 
         </div>
-        <!-- Language Switch -->
+  
         <div class="flex justify-center gap-3 text-sm mb-6">
 
             <a href="{{ route('lang.switch',['locale'=>'ar']) }}"
@@ -65,7 +64,7 @@
             </a>
 
         </div>
-        <!-- Navigation -->
+       
         <nav class="space-y-2 flex-1">
 
             <a href="{{ route('student.dashboard') }}"
@@ -91,7 +90,7 @@
 
         </nav>
 
-        <!-- Logout -->
+      
         <form method="POST" action="{{ route('logout') }}" class="mt-6">
             @csrf
 
@@ -106,7 +105,7 @@
 
     </aside>
 
-    <!-- Main Content -->
+  
     <main class="flex-1 p-8 overflow-y-auto">
 
         @if(session('success'))

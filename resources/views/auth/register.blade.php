@@ -1,7 +1,29 @@
 @extends('layouts.auth')
 
 @section('title', __('auth.register_title'))
+@error('name')
+<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+@enderror
 
+@error('email')
+<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+@enderror
+
+@error('faculty_id')
+<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+@enderror
+
+@error('department_id')
+<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+@enderror
+
+@error('year')
+<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+@enderror
+
+@error('password')
+<p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+@enderror
 @section('content')
 
     <div class="text-center mb-6">
@@ -21,7 +43,7 @@
     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
-        <div class="grid md:grid-cols-2 gap-8 w-full">            <!-- Student Number -->
+        <div class="grid md:grid-cols-2 gap-8 w-full">          
             <div>
                 <label class="block mb-2">{{ __('auth.student_number') }}</label>
                 <input type="text" name="student_number"
@@ -32,7 +54,7 @@
                 @enderror
             </div>
 
-            <!-- Name -->
+           
             <div>
                 <label class="block mb-2">{{ __('auth.name') }}</label>
                 <input type="text" name="name"
@@ -40,15 +62,14 @@
                        required>
             </div>
 
-            <!-- Email -->
-            <div>
+             <div>
                 <label class="block mb-2">{{ __('auth.email') }}</label>
                 <input type="email" name="email"
                        class="w-full border p-3 rounded-lg"
                        required>
             </div>
 
-            <!-- Faculty -->
+          
             <div>
                 <label class="block mb-2">{{ __('auth.faculty') }}</label>
 
@@ -65,7 +86,7 @@
                 </select>
             </div>
 
-            <!-- Department -->
+          
             <div>
                 <label class="block mb-2">{{ __('auth.department') }}</label>
 
@@ -76,7 +97,7 @@
                 </select>
             </div>
 
-            <!-- Year -->
+          
             <div>
                 <label class="block mb-2">{{ __('auth.year') }}</label>
 
@@ -90,22 +111,21 @@
                 </select>
             </div>
 
-            <!-- Avatar -->
+           
             <div>
                 <label class="block mb-2">{{ __('auth.avatar') }}</label>
                 <input type="file" name="avatar"
                        class="w-full border p-3 rounded-lg">
             </div>
 
-            <!-- Password -->
+           
             <div>
                 <label class="block mb-2">{{ __('auth.password') }}</label>
                 <input type="password" name="password"
                        class="w-full border p-3 rounded-lg"
                        required>
             </div>
-
-            <!-- Confirm Password -->
+ 
             <div>
                 <label class="block mb-2">{{ __('auth.confirm_password') }}</label>
                 <input type="password" name="password_confirmation"

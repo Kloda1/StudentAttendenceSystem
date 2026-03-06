@@ -28,10 +28,10 @@
 
 <div class="flex min-h-screen">
 
-    <!-- Sidebar -->
+ 
     <aside class="w-64 bg-gradient-to-b from-blue-700 to-blue-900 text-white p-6 flex flex-col">
 
-        <!-- Logo + Info -->
+     
         <div class="text-center mb-8">
 
             <img src="{{ asset('images/logo.png') }}"
@@ -48,8 +48,7 @@
             </p>
 
         </div>
-
-        <!-- Language Switch -->
+ 
         <div class="flex justify-center gap-3 text-sm mb-6">
 
             <a href="{{ route('lang.switch',['locale'=>'ar']) }}"
@@ -67,7 +66,7 @@
 
         </div>
 
-        <!-- Navigation -->
+       
         <nav class="space-y-2 flex-1">
 
             <a href="{{ route('student.dashboard') }}"
@@ -93,7 +92,7 @@
 
         </nav>
 
-        <!-- Logout -->
+ 
         <form method="POST" action="{{ route('logout') }}" class="mt-6">
             @csrf
 
@@ -107,12 +106,12 @@
 
     </aside>
 
-    <!-- Main Content -->
+   
     <main class="flex-1 p-8 overflow-y-auto">
 
         <div class="bg-white rounded-2xl shadow p-8">
 
-            <!-- Messages -->
+       
             @if(session('success'))
                 <div class="bg-green-100 text-green-700 p-4 rounded-xl mb-4">
                     {{ session('success') }}

@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\StudentOtpMail;
+use App\Models\Attendance;
 use App\Models\Faculty;
+use App\Models\LectureSession;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class CustomLoginController extends Controller
 {
@@ -41,17 +45,49 @@ class CustomLoginController extends Controller
             'year' => $request->year,
             'avatar' => $avatarPath,
             'password' => Hash::make($request->password),
-            'status' => 'active',
+            'status' => 'pending',
             'type' => 'student'
+        ]);
+        $otp = rand(100000, 999999);
+
+        $user->update([
+            'activation_code' => $otp,
+            'activation_expires' => now()->addMinutes(5)
         ]);
 
         $user->assignRole('student');
 
-        auth()->login($user);
 
-        return redirect('/student')
-            ->with('success', __('auth.register_success'));
+        return redirect()->route('otp.verify.form')
+            ->with('email', $user->email);
     }
+
+    public function verifyOtp(Request $request)
+    {
+        $sessionId = session('verify_session');
+
+        $user = User::where('student_number', $request->student_number)->first();
+
+        if (!$user) {
+            return back()->withErrors(['student_number' => 'الطالب غير موجود']);
+        }
+
+        $session = LectureSession::find($sessionId);
+
+        if (!$session || $session->session_otp != $request->otp) {
+            return back()->withErrors(['otp' => 'رمز التحقق غير صحيح']);
+        }
+
+        Attendance::create([
+            'student_id' => $user->id,
+            'lecture_session_id' => $session->id,
+            'attendance_time' => now()
+        ]);
+
+        return redirect('/student')->with('success', 'تم تسجيل الحضور');
+    }
+
+
 
 
 
@@ -109,7 +145,7 @@ class CustomLoginController extends Controller
         }
         $request->session()->regenerate();
 
-        return match(true) {
+        return match (true) {
 
             $user->hasRole('student') => redirect('/student'),
 
@@ -118,9 +154,7 @@ class CustomLoginController extends Controller
             $user->hasRole('super_admin') => redirect('/admin'),
 
             default => redirect('/login')
-
         };
-
     }
 
 

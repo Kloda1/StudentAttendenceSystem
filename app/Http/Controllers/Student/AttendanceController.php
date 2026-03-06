@@ -1,137 +1,138 @@
 <?php
 
-namespace App\Http\Controllers\Student;
 
+namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\LectureSession;
 use App\Models\Attendance;
 use App\Models\AttendanceToken;
-use App\Models\StudentDevice;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
 
 class AttendanceController extends Controller
 {
-   public function index()
+    public function index()
     {
-         return view('student.attendance');
+        return view('student.attendance');
     }
 
-    public function scan(Request $request)
+
+
+    public function verifyOtp(Request $request)
+    {
+        $sessionId = session('verify_session');
+
+        $user = User::where('student_number', $request->student_number)->first();
+
+        if (!$user) {
+            return back()->withErrors(['student_number' => 'الطالب غير موجود']);
+        }
+
+        $session = LectureSession::find($sessionId);
+
+        if (!$session || $session->session_otp != $request->otp) {
+            return back()->withErrors(['otp' => 'رمز التحقق غير صحيح']);
+        }
+
+        Attendance::create([
+            'student_id' => $user->id,
+            'lecture_session_id' => $session->id,
+            'attendance_time' => now()
+        ]);
+
+        return redirect('/student')->with('success', 'تم تسجيل الحضور');
+    }
+
+
+    public function showQr(LectureSession $session)
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            abort(403);
+        }
+
+        if ($session->status !== 'active') {
+            abort(403);
+        }
+
+        if (
+            !$user->hasRole('super_admin') &&
+            $user->id !== $session->lecturer_id
+        ) {
+            abort(403);
+        }
+
+        $otp = $session->session_otp;
+
+        session([
+            'session_id' => $session->id
+        ]);
+
+        $tokenData = route('student.attendance.verify.form', [
+            'session' => $session->id
+        ]);
+        $writer = new PngWriter();
+        $qrCode = new \Endroid\QrCode\QrCode($tokenData);
+
+        $result = $writer->write($qrCode);
+        $qr = $result->getDataUri();
+
+        return view('teacher.lecture-session-qr', [
+            'session' => $session,
+            'qr' => $qr,
+            'otp' => $otp
+        ]);
+    }
+    public function scan(Request $request, LectureSession $session)
+    {
+        if ($session->status !== 'active') {
+            abort(403, 'الجلسة غير نشطة');
+        }
+
+        return redirect()->route('student.attendance.verify.form', [
+            'session' => $session->id
+        ]);
+    }
+
+
+
+
+
+    public function store(Request $request, $sessionId)
     {
         $request->validate([
-            'qr_data' => 'required|string',
+            'student_number' => 'required',
+            'otp' => 'required'
         ]);
 
-        $user = Auth::user();
+        $student = User::where('student_number', $request->student_number)->first();
 
-         $data = json_decode($request->qr_data, true);
-        if (!$data || !isset($data['session_id'], $data['token'], $data['expires_at'])) {
-            return response()->json(['error' => 'QR code غير صالح'], 422);
+        if (!$student) {
+            return back()->with('error', 'الطالب غير موجود');
         }
 
+        $session = LectureSession::find($sessionId);
 
-        $session = LectureSession::find($data['session_id']);
         if (!$session) {
-            return response()->json(['error' => 'error'], 404);
+            return back()->with('error', 'الجلسة غير موجودة');
         }
 
-        if (now()->gt($data['expires_at'])) {
-            return response()->json(['error' => 'expired'], 422);
+        if ($session->session_otp != $request->otp) {
+            return back()->with('error', 'OTP غير صحيح');
         }
 
-         $token = AttendanceToken::where('lecture_session_id', $session->id)
-            ->where('token_value', $data['token'])
-            ->where('is_used', false)
-            ->first();
-        if (!$token) {
-            return response()->json(['error' => 'error'], 422);
-        }
-
-
-        $clientIp = $request->ip();
-        $hall = $session->hall;
-        if ($hall && $hall->ip_range_start && $hall->ip_range_end) {
-
-            $ipLong = ip2long($clientIp);
-            $startLong = ip2long($hall->ip_range_start);
-            $endLong = ip2long($hall->ip_range_end);
-            if ($ipLong < $startLong || $ipLong > $endLong) {
-
-                \App\Models\FailedAttempt::create([
-                    'student_id' => $user->id,
-                    'lecture_session_id' => $session->id,
-                    'reason' => 'wrong_ip',
-                    'ip_address' => $clientIp,
-                    'description' => 'IP خارج النطاق b',
-                ]);
-                return response()->json(['error' => 'network error '], 403);
-            }
-        }
-
-
-        $fingerprint = $request->input('fingerprint');
-        if ($fingerprint) {
-             $existing = Attendance::where('lecture_session_id', $session->id)
-                ->where('device_fingerprint', $fingerprint)
-                ->where('student_id', '!=', $user->id)
-                ->exists();
-            if ($existing) {
-
-                \App\Models\FailedAttempt::create([
-                    'student_id' => $user->id,
-                    'lecture_session_id' => $session->id,
-                    'reason' => 'duplicate_device',
-                    'ip_address' => $clientIp,
-                    'description' => 'used',
-                ]);
-                return response()->json(['error' => 'used'], 403);
-            }
-
-
-            StudentDevice::firstOrCreate(
-                ['device_fingerprint' => $fingerprint],
-                [
-                    'student_id' => $user->id,
-                    'device_type' => $request->input('device_type', 'mobile'),
-                    'device_name' => $request->input('device_name'),
-                    'device_model' => $request->input('device_model'),
-                    'operating_system' => $request->input('os'),
-                    'browser' => $request->input('browser'),
-                    'last_ip_address' => $clientIp,
-                    'last_login_at' => now(),
-                    'is_trusted' => true,
-                ]
-            );
-        }
-
-
-        $alreadyAttended = Attendance::where('lecture_session_id', $session->id)
-            ->where('student_id', $user->id)
-            ->exists();
-        if ($alreadyAttended) {
-            return response()->json(['error' => 'مكرر'], 422);
-        }
-
-
-        $attendance = Attendance::create([
-            'lecture_session_id' => $session->id,
-            'student_id' => $user->id,
-            'attendance_token_id' => $token->id,
-            'attendance_time' => now(),
-            'attendance_method' => 'qr_scan',
-            'attendance_status' => 'present',
-            'ip_address' => $clientIp,
-            'device_fingerprint' => $fingerprint,
+        Attendance::create([
+            'student_id' => $student->id,
+            'lecture_session_id' => $sessionId,
+            'attendance_time' => now()
         ]);
 
-
-        $token->update(['is_used' => true, 'used_by' => $user->id, 'used_at' => now()]);
-
-        $session->increment('actual_attendance');
-
-        return response()->json(['success' => true, 'message' => 'تم']);
+        return back()->with('success', 'تم تسجيل الحضور');
     }
 }

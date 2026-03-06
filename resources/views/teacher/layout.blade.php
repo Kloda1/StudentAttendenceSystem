@@ -23,7 +23,7 @@
 
 <div class="flex min-h-screen">
 
-    <!-- Sidebar -->
+   
     <aside class="w-64 bg-blue-900 text-white p-6 space-y-6">
 
         <div class="text-center">
@@ -37,7 +37,7 @@
                 {{ auth()->user()->name }}
             </p>
         </div>
-        <!-- Language Switch -->
+     
         <div class="flex justify-center gap-3 text-sm mb-6">
 
             <a href="{{ route('lang.switch',['locale'=>'ar']) }}"
@@ -79,7 +79,7 @@
 
     </aside>
 
-    <!-- Main Content -->
+ 
     <main class="flex-1 p-8">
 
         @if(session('success'))
