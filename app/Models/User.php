@@ -61,10 +61,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
 
-    public function subjects()
-    {
-        return $this->hasMany(Subject::class, 'lecturer_id');
-    }
+
 
     public function lectureSessions()
     {
@@ -74,5 +71,12 @@ class User extends Authenticatable implements FilamentUser
     public function headedDepartment()
     {
         return $this->hasOne(Department::class, 'head_of_department');
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'enrollments')
+            ->withPivot(['semester', 'year', 'status'])
+            ->withTimestamps();
     }
 }

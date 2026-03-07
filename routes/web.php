@@ -64,26 +64,26 @@ Route::get(
     Route::prefix('student')
     ->name('student.')
     ->group(function () {
-    
+
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
-    
+
         Route::get('/attendance/{session}', function ($session) {
-    
+
             return view('student.attendance.verify-otp', [
                 'sessionId' => $session
             ]);
-    
+
         })->name('attendance.verify.form');
-    
+
         Route::post(
             '/attendance/store/{session}',
             [AttendanceController::class, 'store']
         )->name('attendance.store');
-    
+
     });
 
- 
+
 Route::middleware(['auth', 'role:course_lecturer'])
     ->prefix('teacher')
     ->name('teacher.')
@@ -116,8 +116,9 @@ Route::get('/', function () {
         $user = auth()->user();
 
         return match (true) {
-            // $user->hasRole('student') => redirect('/student'),
+            $user->hasRole('super-admin') => redirect('/super-admin'),
             $user->hasRole('course_lecturer') => redirect('/teacher'),
+            $user->hasRole('manager') => redirect('/manager'),
             default => redirect('/login')
         };
     }

@@ -125,8 +125,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'view_audit_logs',
         ];
 
-        Hall::create([  
-                      
+        Hall::create([
+
                 'code'            => 'HALL-001',
                 'name'            => 'القاعة الرئيسية',
                 'floor'           => 1,
@@ -155,11 +155,11 @@ class RolesAndPermissionsSeeder extends Seeder
                 'updated_at'      => now(),
             ]
         );
-        Subject::create([  
-            
+        Subject::create([
+
                 'code'           => 'P101',
                 'name'           => 'programming 1',
-                'department_id'  => 1,       
+                'department_id'  => 1,
 
                 'credit_hours'   => 3,
                 'level'          => 1,
@@ -171,7 +171,7 @@ class RolesAndPermissionsSeeder extends Seeder
             [
                 'code'           => 'P102',
                 'name'           => 'programming 2',
-                 'department_id'  => 1,       
+                 'department_id'  => 1,
                 'credit_hours'   => 3,
                 'level'          => 1,
                 'semester'       => 1,
@@ -186,16 +186,15 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
 
-        $superAdminRole = Role::firstOrCreate(['name' => 'super_admin', 'guard_name' => 'web']);
-        $attendanceMonitorRole = Role::firstOrCreate(['name' => 'attendance_monitor', 'guard_name' => 'web']);
+        $superAdminRole = Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => 'web']);
+        $managerRole = Role::firstOrCreate(['name' => 'manager', 'guard_name' => 'web']);
         $lecturerRole = Role::firstOrCreate(['name' => 'course_lecturer', 'guard_name' => 'web']);
-        $studentRole = Role::firstOrCreate(['name' => 'student', 'guard_name' => 'web']);
 
 
         $superAdminRole->syncPermissions(Permission::all());
 
 
-        $attendanceMonitorRole->syncPermissions([
+        $managerRole->syncPermissions([
             'view_dashboard',
             'view_lecture_sessions',
             'view_attendances',
@@ -240,18 +239,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'type' => 'admin',
                 'status' => 'active',
             ]
-        )->assignRole('super_admin');
-
-
-        User::firstOrCreate(
-            ['email' => 'monitor@uni.edu'],
-            [
-                'name' => 'Ali Monitor',
-                'password' => Hash::make('123'),
-                'type' => 'admin',
-                'status' => 'active',
-            ]
-        )->assignRole('attendance_monitor');
+        )->assignRole('super-admin');
 
 
         User::firstOrCreate(
@@ -270,13 +258,13 @@ class RolesAndPermissionsSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'ali@uni.edu'],
             [
-                'name' => 'Ali Student',
+                'name' => 'Ali',
                 'password' => Hash::make('123'),
-                'type' => 'student',
+                'type' => 'manager',
                 'status' => 'active',
                 'student_number' => 'S12345',
             ]
-        )->assignRole('student');
+        )->assignRole('manager');
 
 
     }

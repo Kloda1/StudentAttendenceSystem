@@ -110,7 +110,7 @@ class SubjectResource extends Resource
                 ->searchable()
                 ->sortable(),
             Tables\Columns\TextColumn::make('department.name')
-                ->label(__('subjects.department_id')) // أو department إذا أردت
+                ->label(__('subjects.department_id'))  
                 ->searchable()
                 ->sortable(),
             Tables\Columns\TextColumn::make('credit_hours')
@@ -161,6 +161,6 @@ class SubjectResource extends Resource
 
     public static function canAccess(): bool
     {
-        return auth()->user()->hasAnyRole(['super_admin', 'course_lecturer']);
+        return auth()->user()->hasAnyRole(['super-admin', 'manager']);
     }
 }

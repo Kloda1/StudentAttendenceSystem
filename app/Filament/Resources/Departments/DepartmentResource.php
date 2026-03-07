@@ -26,8 +26,8 @@ class DepartmentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'id';
 
- 
- 
+
+
     public static function getModelLabel(): string
     {
         return __('department.singular');
@@ -88,6 +88,6 @@ class DepartmentResource extends Resource
 
     public static function canAccess(): bool
     {
-        return auth()->user()->hasRole('super_admin');
+        return auth()->user()->hasRole('super-admin');
     }
 }

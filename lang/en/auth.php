@@ -12,6 +12,8 @@ return [
     'student' => 'Student',
     'lecturer' => 'Lecturer',
     'admin' => 'Admin',
+    'super-admin' => 'Super Admin',
+    'manager' => 'Manager',
     'no_account' => 'Don’t have an account?',
     'create_account' => 'Create new account',
     'student_number'=>'Student Number',

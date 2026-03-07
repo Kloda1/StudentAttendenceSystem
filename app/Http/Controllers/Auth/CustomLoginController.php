@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Mail\StudentOtpMail;
 use App\Models\Attendance;
 use App\Models\Faculty;
 use App\Models\LectureSession;
@@ -62,30 +61,7 @@ class CustomLoginController extends Controller
             ->with('email', $user->email);
     }
 
-    public function verifyOtp(Request $request)
-    {
-        $sessionId = session('verify_session');
 
-        $user = User::where('student_number', $request->student_number)->first();
-
-        if (!$user) {
-            return back()->withErrors(['student_number' => __('student.not_found')]);
-        }
-
-        $session = LectureSession::find($sessionId);
-
-        if (!$session || $session->session_otp != $request->otp) {
-            return back()->withErrors(['otp' => __('student.invalid_otp')]);
-        }
-
-        Attendance::create([
-            'student_id' => $user->id,
-            'lecture_session_id' => $session->id,
-            'attendance_time' => now()
-        ]);
-
-        return redirect('/student')->with('success', __('student.attendance_recorded'));
-    }
 
 
 
@@ -107,7 +83,7 @@ class CustomLoginController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'role' => 'nullable|in:student,lecturer,admin',
+            'role' => 'nullable|in:super-admin,lecturer,manager',
         ]);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
@@ -128,9 +104,9 @@ class CustomLoginController extends Controller
         if ($request->filled('role')) {
 
             $map = [
-                'student' => 'student',
+                'super-admin' => 'super-admin',
                 'lecturer' => 'course_lecturer',
-                'admin' => 'super_admin',
+                'manager' => 'manager',
             ];
 
             $spatieRole = $map[$request->role] ?? null;
@@ -147,11 +123,11 @@ class CustomLoginController extends Controller
 
         return match (true) {
 
-            $user->hasRole('student') => redirect('/student'),
+            $user->hasRole('super-admin') => redirect('/admin'),
 
             $user->hasRole('course_lecturer') => redirect('/teacher'),
 
-            $user->hasRole('super_admin') => redirect('/admin'),
+            $user->hasRole('manager') => redirect('/manager'),
 
             default => redirect('/login')
         };

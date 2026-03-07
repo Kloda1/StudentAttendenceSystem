@@ -14,7 +14,7 @@ class DashboardController extends Controller
         return view('teacher.dashboard', [
             'sessionsCount' => \App\Models\LectureSession::where('lecturer_id', $user->id)->count(),
             'todayAttendance' => \App\Models\Attendance::whereDate('created_at', now())->count(),
-            'totalStudents' => \App\Models\User::role('student')->count(),
+            'totalStudents' =>  \App\Models\User::where('type',  'student')->count(),
             'activeSession' => \App\Models\LectureSession::where('lecturer_id', $user->id)
                 ->where('status', 'active')
                 ->first(),

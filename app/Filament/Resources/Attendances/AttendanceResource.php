@@ -25,7 +25,7 @@ class AttendanceResource extends Resource
     // protected static ?string $recordTitleAttribute = 'Attendance';
     protected static ?string $recordTitleAttribute = 'id';
 
-  
+
     public static function getModelLabel(): string
     {
         return __('attendance.singular');
@@ -50,7 +50,7 @@ class AttendanceResource extends Resource
     {
         return __('attendance.record_title') . ' #' . $record->id;
     }
-    
+
 
     public static function form(Schema $schema): Schema
     {
@@ -85,7 +85,7 @@ class AttendanceResource extends Resource
     }
     public static function canAccess(): bool
     {
-        return auth()->user()->hasAnyRole(['super_admin', 'attendance_monitor', 'course_lecturer']);
+        return auth()->user()->hasAnyRole(['super-admin', 'manager']);
     }
 
 }

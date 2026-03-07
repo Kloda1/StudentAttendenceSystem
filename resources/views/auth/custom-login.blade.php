@@ -109,11 +109,11 @@
 
                 <div class="flex flex-wrap gap-4">
 
-                    <!-- <label class="inline-flex items-center">
-                        <input type="radio" name="role" value="student"
+                     <label class="inline-flex items-center">
+                        <input type="radio" name="role" value="manager"
                                class="form-radio text-blue-600">
-                        <span class="mr-2">{{ __('auth.student') }}</span>
-                    </label> -->
+                        <span class="mr-2">{{ __('auth.manager') }}</span>
+                    </label>
 
                     <label class="inline-flex items-center">
                         <input type="radio" name="role" value="lecturer"
@@ -122,9 +122,9 @@
                     </label>
 
                     <label class="inline-flex items-center">
-                        <input type="radio" name="role" value="admin"
+                        <input type="radio" name="role" value="super-admin"
                                class="form-radio text-blue-600">
-                        <span class="mr-2">{{ __('auth.admin') }}</span>
+                        <span class="mr-2">{{ __('auth.super-admin') }}</span>
                     </label>
 
                 </div>

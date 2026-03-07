@@ -32,7 +32,7 @@ class AuditLogResource extends Resource
     {
         return __('audit_logs.singular');
     }
-    
+
     public static function getPluralModelLabel(): string
     {
         return __('audit_logs.plural');
@@ -54,7 +54,7 @@ class AuditLogResource extends Resource
 
     public static function canAccess(): bool
     {
-        return auth()->user()->hasRole('super_admin');
+        return auth()->user()->hasRole('super-admin');
     }
 
     public static function getRelations(): array

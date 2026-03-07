@@ -10,6 +10,8 @@ return [
     'register_title'=>'إنشاء حساب',
     'confirm_password'=>'تأكيد كلمة المرور',
     'name'=>'الاسم',
+    'manager'=>'مدير',
+    'super-admin' => 'مدير عام',
     'login_title'=>'تسجيل الدخول',
     'university_name'=>'جامعة المنارة',
     'system_name'=>'نظام حضور الطلاب',

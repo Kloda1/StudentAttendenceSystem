@@ -42,4 +42,6 @@ return [
     'student_number' => 'Student Number',
     'verification_code' => 'Verification Code',
     'verify' => 'Verify',
+    'not_enrolled_in_subject' => 'Student are not enrolled in this subject',
+    'subject_not_found' => 'Subject not found for this session',
 ];

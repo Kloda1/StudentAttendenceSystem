@@ -6,18 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
-   public function lecturer()
-{
-    return $this->belongsTo(User::class, 'lecturer_id');
-}
+    public function lecturer()
+    {
+        return $this->belongsTo(User::class, 'lecturer_id');
+    }
 
-public function department()
-{
-    return $this->belongsTo(Department::class);
-}
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 
-public function lectureSessions()
-{
-    return $this->hasMany(LectureSession::class);
-}
+    public function lectureSessions()
+    {
+        return $this->hasMany(LectureSession::class);
+    }
+
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'enrollments')
+            ->withPivot(['semester', 'year', 'status'])
+            ->withTimestamps();
+    }
 }

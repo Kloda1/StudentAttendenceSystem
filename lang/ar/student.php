@@ -46,5 +46,7 @@ return [
     'student_number' => 'الرقم الجامعي',
     'verification_code' => 'رمز التحقق',
     'verify' => 'تحقق',
+    'not_enrolled_in_subject' => 'الطالب غير مسجل في هذه المادة',
+    'subject_not_found' => 'المادة غير موجودة لهذه الجلسة',
 
 ];
