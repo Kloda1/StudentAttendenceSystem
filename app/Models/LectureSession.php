@@ -19,6 +19,10 @@ class LectureSession extends Model
         'notes',
         'session_otp'
     ];
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        return $this->email === 'super@admin.com' || $this->hasRole(['super_admin', 'manager', 'course_lecturer']);
+    }
 
     public function subject()
     {

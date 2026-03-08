@@ -75,7 +75,7 @@
 
     </div>
 
-    @if(auth()->user()->hasAnyRole(['super_admin', 'course_lecturer']))
+    @if(auth()->user()->hasAnyRole(['super-admin', 'course_lecturer']))
         <div class="mt-8 flex justify-end">
             <a href="/admin"
                class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
