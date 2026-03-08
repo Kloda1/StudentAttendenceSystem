@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Subjects;
 
 
 use App\Filament\Resources\Students\RelationManagers\SubjectsRelationManager;
+use App\Filament\Resources\Subjects\RelationManagers\StudentsRelationManager;
 use App\Models\Subject;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -137,7 +138,8 @@ class SubjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-//            SubjectsRelationManager::class
+            StudentsRelationManager::class
+
         ];
     }
 

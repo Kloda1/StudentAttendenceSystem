@@ -11,4 +11,11 @@ return [
     'subject' => 'المادة',
     'enrolled_subjects' => 'المواد المسجل فيها',
     'add_subject' => 'إضافة مادة',
+
+
+
+    'attach_student' => 'إضافة طالب',
+    'student' => 'الطالب',
+    'student_number' => 'الرقم الجامعي',
+    'name' => 'الاسم',
 ];

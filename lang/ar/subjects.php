@@ -8,6 +8,8 @@ return [
     'create_title' => 'إضافة مادة',
     'record_title' => 'سجل مادة',
 
+    'import_students' => 'استيراد طلاب المادة',
+
     'code' => 'رمز المادة',
     'name' => 'اسم المادة',
     'lecturer_id' => 'معرف المحاضر',

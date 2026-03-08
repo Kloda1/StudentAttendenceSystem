@@ -24,6 +24,9 @@ return [
     'import_failed'  => 'Import failed, please check the file format',
 
 
+
+    'import_students' => 'Import Subject Students',
+
     'view' => 'View',
     'edit' => 'Edit',
     'delete_selected' => 'Delete Selected',
