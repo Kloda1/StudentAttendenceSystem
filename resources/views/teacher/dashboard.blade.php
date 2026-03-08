@@ -6,7 +6,7 @@
 
     <div class="grid md:grid-cols-4 gap-6">
 
-  
+
         <div class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6">
 
             <div class="text-sm text-gray-500">
@@ -19,7 +19,7 @@
 
         </div>
 
-      
+
         <div class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6">
 
             <div class="text-sm text-gray-500">
@@ -32,7 +32,7 @@
 
         </div>
 
-  
+
         <div class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6">
 
             <div class="text-sm text-gray-500">
@@ -45,7 +45,7 @@
 
         </div>
 
-    
+
         <div class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6">
 
             <div class="text-sm text-gray-500">
@@ -86,9 +86,9 @@
                 {{ __('teacher.go_admin_panel')}}
             </a>
         </div>
-    @endif  
+    @endif
 
- 
+
 
 
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
+    protected $fillable =['name'];
     public function lecturer()
     {
         return $this->belongsTo(User::class, 'lecturer_id');
@@ -24,7 +25,7 @@ class Subject extends Model
 
     public function students()
     {
-        return $this->belongsToMany(User::class, 'enrollments')
+        return $this->belongsToMany(Student::class, 'enrollments')
             ->withPivot(['semester', 'year', 'status'])
             ->withTimestamps();
     }

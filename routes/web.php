@@ -32,15 +32,12 @@ Route::post('/logout', [CustomLoginController::class, 'logout'])
     ->name('logout');
 
 
-
-
 Route::get('/attendance', [AttendanceController::class, 'index'])
-
     ->name('student.attendance');
 
 Route::post(
     '/student/attendance/scan/{session}',
-    [AttendanceController::class, 'scan'])  ->name('student.attendance.scan');
+    [AttendanceController::class, 'scan'])->name('student.attendance.scan');
 
 //Route::get('/student/attendance/verify-otp/{session}', function ($session) {
 Route::get('/student/attendance/{session}', function ($session) {
@@ -60,8 +57,7 @@ Route::get(
     ->name('teacher.lecture-session.qr');
 
 
-
-    Route::prefix('student')
+Route::prefix('student')
     ->name('student.')
     ->group(function () {
 
@@ -83,7 +79,22 @@ Route::get(
 
     });
 
+// routes for manager
+Route::middleware(['auth', 'role:manager'])
+    ->prefix('manager')
+    ->name('manager.')
+    ->group(function () {
 
+        Route::get('/', [\App\Http\Controllers\Manager\DashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/profile', [App\Http\Controllers\Manager\ProfileController::class, 'edit'])
+            ->name('profile');
+
+        Route::put('/profile', [App\Http\Controllers\Manager\ProfileController::class, 'update'])
+            ->name('profile.update');
+
+    });
 Route::middleware(['auth', 'role:course_lecturer'])
     ->prefix('teacher')
     ->name('teacher.')
@@ -98,7 +109,6 @@ Route::middleware(['auth', 'role:course_lecturer'])
         Route::put('/profile', [App\Http\Controllers\Teacher\ProfileController::class, 'update'])
             ->name('profile.update');
     });
-
 
 
 Route::get('/departments/{faculty}', function ($faculty) {

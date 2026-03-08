@@ -21,6 +21,6 @@ class SetAdminLocale
         return $next($request);
 //        app()->setLocale(session('locale', config('app.locale')));
 
-     }
+    }
 
 }

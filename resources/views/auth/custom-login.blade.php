@@ -11,16 +11,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        body{
-            background: linear-gradient(135deg,#1E40AF 0%,#3B82F6 100%);
-            font-family:Tajawal,sans-serif;
+        body {
+            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+            font-family: Tajawal, sans-serif;
         }
 
-        .login-card{
+        .login-card {
             backdrop-filter: blur(12px);
-            background: rgba(255,255,255,0.95);
-            border-radius:24px;
-            box-shadow:0 20px 60px rgba(0,0,0,0.25);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
         }
     </style>
 
@@ -37,14 +37,14 @@
 
             <a href="{{ route('lang.switch',['locale'=>'ar']) }}"
                class="hover:underline">
-               {{ __('auth.arabic') }}
+                {{ __('auth.arabic') }}
             </a>
 
             <span>|</span>
 
             <a href="{{ route('lang.switch',['locale'=>'en']) }}"
                class="hover:underline">
-               {{ __('auth.english') }}
+                {{ __('auth.english') }}
             </a>
 
         </div>
@@ -109,7 +109,7 @@
 
                 <div class="flex flex-wrap gap-4">
 
-                     <label class="inline-flex items-center">
+                    <label class="inline-flex items-center">
                         <input type="radio" name="role" value="manager"
                                class="form-radio text-blue-600">
                         <span class="mr-2">{{ __('auth.manager') }}</span>

@@ -23,11 +23,12 @@ class LectureSessionResource extends Resource
     protected static ?string $model = LectureSession::class;
 
 
-    protected static string|BackedEnum|null $navigationIcon =  Heroicon::RectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::RectangleStack;
 
     //    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?int $navigationSort = 2;
+
     public static function getModelLabel(): string
     {
         return __('lecture-session.singular');
@@ -144,16 +145,13 @@ class LectureSessionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('subject.name')
                     ->label(__('lecture-session.subject'))
-
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('hall.name')
                     ->label(__('lecture-session.hall'))
-
                     ->searchable(),
                 Tables\Columns\TextColumn::make('session_date')
                     ->label(__('lecture-session.session_date'))
-
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_time')
@@ -171,14 +169,14 @@ class LectureSessionResource extends Resource
                 //         'danger' => 'cancelled',
                 //     ]),
                 Tables\Columns\BadgeColumn::make('status')
-    ->label(__('lecture-session.status'))
-    ->colors([
-        'warning' => 'scheduled',
-        'success' => 'active',
-        'secondary' => 'completed',
-        'danger' => 'cancelled',
-    ])
-    ->formatStateUsing(fn ($state) => __("lecture-session.status_{$state}")),
+                    ->label(__('lecture-session.status'))
+                    ->colors([
+                        'warning' => 'scheduled',
+                        'success' => 'active',
+                        'secondary' => 'completed',
+                        'danger' => 'cancelled',
+                    ])
+                    ->formatStateUsing(fn($state) => __("lecture-session.status_{$state}")),
                 Tables\Columns\TextColumn::make('actual_attendance')
                     ->label(__('lecture-session.actual_attendance')),
             ])
@@ -201,7 +199,6 @@ class LectureSessionResource extends Resource
                     ->label(__('lecture-session.start_session'))
                     ->icon('heroicon-o-play')
                     ->color('success')
-
                     ->action(function (LectureSession $record) {
 
                         $otp = random_int(100000, 999999);
@@ -230,15 +227,14 @@ class LectureSessionResource extends Resource
                     ->visible(fn(LectureSession $record) => $record->status === 'active'),
 
 
-               ActionsAction::make('view_attendance')
-                   ->label(__('attendance.view_attendance'))
-                   ->color('success')
+                ActionsAction::make('view_attendance')
+                    ->label(__('attendance.view_attendance'))
+                    ->color('success')
                     ->icon('heroicon-o-users')
-                    ->url(fn (LectureSession $record) =>
-                        LectureSessionResource::getUrl('view', [
-                            'record' => $record,
-                            'activeRelationManager' => 'attendances'
-                        ])
+                    ->url(fn(LectureSession $record) => LectureSessionResource::getUrl('view', [
+                        'record' => $record,
+                        'activeRelationManager' => 'attendances'
+                    ])
                     )
                     ->openUrlInNewTab(),
             ])
@@ -252,6 +248,7 @@ class LectureSessionResource extends Resource
             AttendancesRelationManager::class,
         ];
     }
+
     public static function getPages(): array
     {
         return [
@@ -276,6 +273,6 @@ class LectureSessionResource extends Resource
 
     public static function canAccess(): bool
     {
-        return auth()->user()->hasAnyRole(['super-admin', 'manager' ,'course_lecturer']);
+        return auth()->user()->hasAnyRole(['super-admin', 'manager', 'course_lecturer']);
     }
 }

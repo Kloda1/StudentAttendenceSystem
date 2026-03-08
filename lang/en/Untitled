@@ -1,9 +1,0 @@
-<?php
-
-return [
-    'singular'      => 'Failed Attempt',
-    'plural'        => 'Failed Attempts',
-    'create'        => 'Create',
-    'create_title'  => 'Create Failed Attempt',
-    'record_title'  => 'Failed Attempt Record',
-];

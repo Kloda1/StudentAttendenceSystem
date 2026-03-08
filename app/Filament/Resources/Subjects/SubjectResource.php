@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Subjects;
 
 
+use App\Filament\Resources\Students\RelationManagers\SubjectsRelationManager;
 use App\Models\Subject;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -110,7 +111,7 @@ class SubjectResource extends Resource
                 ->searchable()
                 ->sortable(),
             Tables\Columns\TextColumn::make('department.name')
-                ->label(__('subjects.department_id'))  
+                ->label(__('subjects.department_id'))
                 ->searchable()
                 ->sortable(),
             Tables\Columns\TextColumn::make('credit_hours')
@@ -135,7 +136,9 @@ class SubjectResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+//            SubjectsRelationManager::class
+        ];
     }
 
     public static function getPages(): array

@@ -27,16 +27,19 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
     public function canAccessFilament(): bool
     {
         return $this->hasAnyRole([
             'super_admin',
-            'course_lecturer'
+            'course_lecturer',
+            'manager',
         ]);
     }
+
     public function canAccessPanel(\Filament\Panel $panel): bool
     {
-        return $this->email === 'super@admin.com' || $this->hasRole(['super_admin', 'attendance_monitor', 'course_lecturer']);
+        return $this->email === 'super@admin.com' || $this->hasRole(['super_admin', 'manager', 'course_lecturer']);
     }
 
 
@@ -61,8 +64,6 @@ class User extends Authenticatable implements FilamentUser
     }
 
 
-
-
     public function lectureSessions()
     {
         return $this->hasMany(LectureSession::class, 'lecturer_id');
@@ -75,7 +76,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'enrollments')
+        return $this->belongsToMany(Subject::class, Enrollment::class)
             ->withPivot(['semester', 'year', 'status'])
             ->withTimestamps();
     }

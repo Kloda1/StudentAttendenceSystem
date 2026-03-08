@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\Hall;
+use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,31 +20,29 @@ class RolesAndPermissionsSeeder extends Seeder
 
     public function run(): void
     {
-         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         $cs = Faculty::create([
             'name' => 'كلية المعلوماتية'
         ]);
 
 
-
         Department::create([
-            'faculty_id'=>$cs->id,
-            'code'=>'CS-SE',
-            'name'=>'هندسة البرمجيات'
+            'faculty_id' => $cs->id,
+            'code' => 'CS-SE',
+            'name' => 'هندسة البرمجيات'
         ]);
 
         Department::create([
-            'faculty_id'=>$cs->id,
-            'code'=>'CS-NET',
-            'name'=>'الشبكات'
+            'faculty_id' => $cs->id,
+            'code' => 'CS-NET',
+            'name' => 'الشبكات'
         ]);
 
         Department::create([
-            'faculty_id'=>$cs->id,
-            'code'=>'CS-AI',
-            'name'=>'الذكاء'
+            'faculty_id' => $cs->id,
+            'code' => 'CS-AI',
+            'name' => 'الذكاء'
         ]);
-
 
 
         $permissions = [
@@ -127,57 +126,69 @@ class RolesAndPermissionsSeeder extends Seeder
 
         Hall::create([
 
-                'code'            => 'HALL-001',
-                'name'            => 'القاعة الرئيسية',
-                'floor'           => 1,
-                'capacity'        => 100,
-                'has_projector'   => true,
-                'has_computer'    => true,
-                'network_ssid'    => 'MainHall-WiFi',
-                'ip_range_start'  => '192.168.1.100',
-                'ip_range_end'    => '192.168.1.200',
-                'is_active'       => true,
-                'created_at'      => now(),
-                'updated_at'      => now(),
-            ] ,
+            'code' => 'HALL-001',
+            'name' => 'القاعة الرئيسية',
+            'floor' => 1,
+            'capacity' => 100,
+            'has_projector' => true,
+            'has_computer' => true,
+            'network_ssid' => 'MainHall-WiFi',
+            'ip_range_start' => '192.168.1.100',
+            'ip_range_end' => '192.168.1.200',
+            'is_active' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
             [
-                'code'            => 'HALL-003',
-                'name'            => 'قاعة 2',
-                'floor'           => 3,
-                'capacity'        => 30,
-                'has_projector'   => false,
-                'has_computer'    => true,
-                'network_ssid'    => 'Lab-Net',
-                'ip_range_start'  => '10.0.0.1',
-                'ip_range_end'    => '10.0.0.254',
-                'is_active'       => true,
-                'created_at'      => now(),
-                'updated_at'      => now(),
+                'code' => 'HALL-003',
+                'name' => 'قاعة 2',
+                'floor' => 3,
+                'capacity' => 30,
+                'has_projector' => false,
+                'has_computer' => true,
+                'network_ssid' => 'Lab-Net',
+                'ip_range_start' => '10.0.0.1',
+                'ip_range_end' => '10.0.0.254',
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         );
         Subject::create([
 
-                'code'           => 'P101',
-                'name'           => 'programming 1',
-                'department_id'  => 1,
+            'code' => 'P101',
+            'name' => 'programming 1',
+            'department_id' => 1,
 
-                'credit_hours'   => 3,
-                'level'          => 1,
-                'semester'       => 1,
-                'is_active'      => true,
-                'created_at'     => now(),
-                'updated_at'     => now(),
-            ] ,
+            'credit_hours' => 3,
+            'level' => 1,
+            'semester' => 1,
+            'is_active' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ],
             [
-                'code'           => 'P102',
-                'name'           => 'programming 2',
-                 'department_id'  => 1,
-                'credit_hours'   => 3,
-                'level'          => 1,
-                'semester'       => 1,
-                'is_active'      => true,
-                'created_at'     => now(),
-                'updated_at'     => now(),
+                'code' => 'P102',
+                'name' => 'programming 2',
+                'department_id' => 1,
+                'credit_hours' => 3,
+                'level' => 1,
+                'semester' => 1,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'code' => 'P103',
+                'name' => 'programming 3',
+                'department_id' => 1,
+                'credit_hours' => 3,
+                'level' => 1,
+                'semester' => 1,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         );
 
@@ -223,8 +234,6 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
 
 
-
-
         $this->createTestUsers();
     }
 
@@ -254,7 +263,6 @@ class RolesAndPermissionsSeeder extends Seeder
         )->assignRole('course_lecturer');
 
 
-
         User::firstOrCreate(
             ['email' => 'ali@uni.edu'],
             [
@@ -266,6 +274,34 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         )->assignRole('manager');
 
+        Student::insert([
+            [
+                'name' => 'nour',
+                'faculty_id' => 1,
+                'department_id' => 1,
+                'year' => 3,
+                'type' => 'student',
+                'phone' => '0912345678',
+                'status' => 'active',
+                'student_number' => '20230001',
+                'national_number' => '12345678901',
+                'avatar' => null,
+                'is_active' => 0,
+            ],
+            [
+                'name' => 'Lama',
+                'faculty_id' => 1,
+                'department_id' => 1,
+                'year' => 2,
+                'type' => 'student',
+                'phone' => '0987654321',
+                'status' => 'pending',
+                'student_number' => '20230002',
+                'national_number' => '10987654321',
+                'avatar' => null,
+                'is_active' => 0,
+            ],
+        ]);
 
     }
 }

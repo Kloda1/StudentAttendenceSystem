@@ -1,5 +1,13 @@
 <?php
 return [
+
+    'singular' => 'طالب',
+    'plural' => 'الطلاب',
+    'create' => 'إضافة',
+    'create_title' => 'إضافة طالب',
+    'record_title' => 'سجل طالب',
+
+
     'university' => 'جامعة المنارة',
     'welcome' => 'مرحباً',
     'dashboard_title' => 'لوحة تحكم الطالب',
@@ -31,7 +39,6 @@ return [
     'greeting' => 'مرحباً',
 
 
-
     'student_dashboard' => 'لوحة الطالب',
     'arabic' => 'العربية',
     'english' => 'الإنكليزية',
@@ -48,5 +55,26 @@ return [
     'verify' => 'تحقق',
     'not_enrolled_in_subject' => 'الطالب غير مسجل في هذه المادة',
     'subject_not_found' => 'المادة غير موجودة لهذه الجلسة',
-
+    'name' => 'الاسم',
+    'faculty_id' => 'الكلية',
+    'department_id' => 'القسم',
+    'year' => 'السنة الدراسية',
+    'type' => 'النوع',
+    'status' => 'الحالة',
+    'avatar' => 'الصورة الشخصية',
+    'is_active' => 'نشط',
+    'created_at' => 'تاريخ الإنشاء',
+    'updated_at' => 'تاريخ التحديث',
+    'view' => 'عرض',
+    'edit' => 'تعديل',
+    'delete_selected' => 'حذف المحدد',
+    'national_number' => 'الرقم الوطني',
+    'status_pending' => 'قيد الانتظار',
+    'status_active' => 'نشط',
+    'status_blocked' => 'محظور',
+    'status_suspended' => 'موقوف',
+    'import_excel' => 'استيراد من Excel',
+    'excel_file' => 'ملف Excel',
+    'import_success' => 'تم استيراد الطلاب بنجاح',
+    'import_failed' => 'فشل الاستيراد، يرجى التحقق من صيغة الملف',
 ];
