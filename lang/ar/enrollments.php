@@ -10,4 +10,5 @@ return [
     'failed' => 'راسب',
     'subject' => 'المادة',
     'enrolled_subjects' => 'المواد المسجل فيها',
+    'add_subject' => 'إضافة مادة',
 ];

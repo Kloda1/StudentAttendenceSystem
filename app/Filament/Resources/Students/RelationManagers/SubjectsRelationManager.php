@@ -52,7 +52,7 @@ class SubjectsRelationManager extends RelationManager
             ])
             ->headerActions([
                 AttachAction::make()
-                    ->label('إضافة مادة')
+                    ->label(__('enrollments.add_subject'))
                     ->form(fn(AttachAction $action): array => [
                         Forms\Components\Select::make('recordId')
                             ->label(__('enrollments.subject'))

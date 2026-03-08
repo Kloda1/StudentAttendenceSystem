@@ -10,4 +10,5 @@ return [
     'failed' => 'Failed',
     'subject' => 'Subject',
     'enrolled_subjects' => 'Enrolled Subjects',
+    'add_subject' => 'Add Subject',
 ];
