@@ -22,12 +22,23 @@ class AbsentStudentsRelationManager extends RelationManager
     }
 
     public function table(Table $table): Table
-    {
+    {  $session = $this->ownerRecord;  
+         
         $sessionId = $this->ownerRecord->id;
+        $subjectId = $session->subject_id;
 
         return $table
-            ->query(Student::whereDoesntHave('attendances', function ($q) use ($sessionId) {
-                $q->where('lecture_session_id', $sessionId);
+
+        ->query(
+            Student::whereHas('enrollments', function ($q) use ($subjectId) {
+                $q->where('subject_id', $subjectId);
+            })
+            ->whereDoesntHave('attendances', function ($q) use ($session) {
+                $q->where('lecture_session_id', $session->id);
+            
+
+            // ->query(Student::whereDoesntHave('attendances', function ($q) use ($sessionId) {
+            //     $q->where('lecture_session_id', $sessionId);
             }))
             ->columns([
                 TextColumn::make('name')->label(__('attendance.student_name'))->searchable(),

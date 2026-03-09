@@ -11,7 +11,10 @@ class Student extends Model
     {
         return $this->hasMany(Attendance::class);
     }
-    
+    public function enrollments()
+{
+    return $this->hasMany(Enrollment::class, 'student_id');
+}
  
     public function subjects()
     {
