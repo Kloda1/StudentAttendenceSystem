@@ -77,4 +77,5 @@ return [
     'excel_file' => 'ملف Excel',
     'import_success' => 'تم استيراد الطلاب بنجاح',
     'import_failed' => 'فشل الاستيراد، يرجى التحقق من صيغة الملف',
+    'enter_student_number_and_code' => 'أدخل الرقم الجامعي ورمز التحقق لإتمام تأكيد الحضور.',
 ];

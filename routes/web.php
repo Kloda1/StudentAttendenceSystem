@@ -72,10 +72,8 @@ Route::prefix('student')
 
         })->name('attendance.verify.form');
 
-        Route::post(
-            '/attendance/store/{session}',
-            [AttendanceController::class, 'store']
-        )->name('attendance.store');
+        Route::post('/attendance/store/{session}', [AttendanceController::class, 'store'])
+            ->name('student.attendance.store');
 
     });
 
@@ -109,8 +107,14 @@ Route::middleware(['auth', 'role:course_lecturer'])
         Route::put('/profile', [App\Http\Controllers\Teacher\ProfileController::class, 'update'])
             ->name('profile.update');
     });
-
-
+Route::get('/student/attendance/{session}', [AttendanceController::class, 'verifySession'])
+    ->name('student.attendance.verify.form');
+//Route::get('/student/attendance/verify/{token}', [AttendanceController::class, 'verifyToken'])
+//    ->name('student.attendance.verify.token');
+Route::post('/student/attendance/store/{session}', [AttendanceController::class, 'store'])
+    ->name('student.attendance.store');
+Route::get('/student/attendance/verify/{token}', [AttendanceController::class, 'verifyToken'])
+    ->name('student.attendance.verify.token');
 Route::get('/departments/{faculty}', function ($faculty) {
 
     return \App\Models\Department::where('faculty_id', $faculty)

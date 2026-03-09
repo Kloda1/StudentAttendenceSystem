@@ -35,4 +35,6 @@ return [
     'session_qr' => 'Session QR Code',
     'auto_refresh' => 'Auto refreshes every :seconds seconds',
     'verification_code' => 'Verification Code',
+     'qr_expired' => 'QR Expired',
+     'qr_expires_in' =>  'Qr Expired in ',
 ];

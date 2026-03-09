@@ -61,7 +61,7 @@
 </div>
 
 <form method="POST" action="{{ route('student.attendance.store', ['session' => $sessionId]) }}" class="form" novalidate>
-    @csrf
+     @csrf
 
     <div class="field">
         <label for="student_number" class="label">
@@ -98,7 +98,9 @@
     </button>
 
     <div class="footer-note">
-        أدخل الرقم الجامعي ورمز التحقق لإتمام تأكيد الحضور.
+        {{ __('student.enter_student_number_and_code') }}
     </div>
 </form>
+
+
 @endsection

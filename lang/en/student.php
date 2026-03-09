@@ -68,8 +68,10 @@ return [
     'status_active' => 'Active',
     'status_blocked' => 'Blocked',
     'status_suspended' => 'Suspended',
-    'import_excel'   => 'Import from Excel',
-    'excel_file'     => 'Excel File',
+    'import_excel' => 'Import from Excel',
+    'excel_file' => 'Excel File',
     'import_success' => 'Students imported successfully',
-    'import_failed'  => 'Import failed, please check the file format',
+    'import_failed' => 'Import failed, please check the file format',
+    'enter_student_number_and_code' => 'Enter your student number and verification code to confirm your attendance.',
+
 ];

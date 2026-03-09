@@ -35,5 +35,7 @@ return [
     'session_qr' => 'QR Code الجلسة',
     'auto_refresh' => 'يحدث تلقائياً كل :seconds ثانية',
     'verification_code' => 'رمز التحقق',
+   'qr_expired' => 'انتهت صلاحية رمز QR',
+   'qr_expires_in' => 'سينتهي رمز QR بعد',
 
 ];
