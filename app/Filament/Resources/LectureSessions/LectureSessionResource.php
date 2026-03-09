@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\LectureSessions;
 
 use App\Filament\Resources\LectureSessions\RelationManagers\AttendancesRelationManager;
+use App\Filament\Resources\LectureSessions\RelationManagers\AbsentStudentsRelationManager;
 use App\Models\LectureSession;
 use App\Models\Subject;
 use Filament\Resources\Resource;
@@ -246,6 +247,7 @@ class LectureSessionResource extends Resource
     {
         return [
             AttendancesRelationManager::class,
+            AbsentStudentsRelationManager::class
         ];
     }
 

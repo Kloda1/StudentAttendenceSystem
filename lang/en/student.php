@@ -73,5 +73,13 @@ return [
     'import_success' => 'Students imported successfully',
     'import_failed' => 'Import failed, please check the file format',
     'enter_student_number_and_code' => 'Enter your student number and verification code to confirm your attendance.',
+    'absent_students' => 'Absent Students',
+    'serial'          => '#',
+    'name'            => 'Name',
+    'student_number'  => 'Student Number',
+    'student_name'   => 'Student Name',
+    'student_number' => 'Student Number',
+    'export_excel'   => 'Export Excel',
+    'export_pdf'     => 'Export PDF',
 
 ];

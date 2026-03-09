@@ -32,38 +32,76 @@ class AttendancesRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
+        // return $table
+        //     ->columns([
+
+        //         TextColumn::make('student.name')
+        //             ->label(__('attendance.student_name'))
+        //             ->searchable(),
+
+        //         TextColumn::make('student.student_number')
+        //             ->label(__('attendance.student_number'))
+        //             ->searchable(),
+
+        //         TextColumn::make('attendance_time')
+        //             ->label(__('attendance.attendance_time'))
+        //             ->dateTime(),
+        //             ])
+              
+                   
+        //     ->headerActions([
+        //         Action::make('export_excel')
+        //             ->label(__('attendance.export_excel'))
+        //             ->icon('heroicon-o-arrow-down-tray')
+        //             ->action(function ($livewire) {
+
+        //                 $records = $livewire->getRelationship()->with('student')->get();
+
+        //                 return Excel::download(
+        //                     new AttendanceExport($records),
+        //                     'attendance.xlsx'
+        //                 );
+        //             }),
+
+
+        //     ])
         return $table
-            ->columns([
-
-                TextColumn::make('student.name')
-                    ->label(__('attendance.student_name'))
-                    ->searchable(),
-
-                TextColumn::make('student.student_number')
-                    ->label(__('attendance.student_number'))
-                    ->searchable(),
-
-                TextColumn::make('attendance_time')
-                    ->label(__('attendance.attendance_time'))
-                    ->dateTime(),
-
-            ])
-            ->headerActions([
-                Action::make('export_excel')
-                    ->label(__('attendance.export_excel'))
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->action(function ($livewire) {
-
-                        $records = $livewire->getRelationship()->with('student')->get();
-
-                        return Excel::download(
-                            new AttendanceExport($records),
-                            'attendance.xlsx'
-                        );
-                    }),
-
-
-            ])
+        
+        ->modifyQueryUsing(fn ($query) => $query
+            ->whereIn('id', function ($sub) {
+                $sub->selectRaw('MAX(id)')
+                    ->from('attendances')
+                    ->where('lecture_session_id', $this->ownerRecord->id)
+                    ->groupBy('student_id');
+            })
+            ->orderBy('attendance_time', 'desc')
+        )
+        ->columns([
+            TextColumn::make('student.name')
+                ->label(__('attendance.student_name'))
+                ->searchable(),
+            TextColumn::make('student.student_number')
+                ->label(__('attendance.student_number'))
+                ->searchable(),
+            TextColumn::make('attendance_time')
+                ->label(__('attendance.attendance_time'))
+                ->dateTime(),
+        ])
+        ->headerActions([
+            Action::make('export_excel')
+                ->label(__('attendance.export_excel'))
+                ->icon('heroicon-o-arrow-down-tray')
+                ->action(function ($livewire) {
+                    $records = $livewire->getRelationship()
+                        ->with('student')
+                        ->get()
+                        ->unique('student_id');  
+                    return Excel::download(
+                        new AttendanceExport($records),
+                        'attendance.xlsx'
+                    );
+                }),
+        ])
             ->filters([
                 //
             ])

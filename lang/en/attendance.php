@@ -62,4 +62,9 @@ return [
     'create' => 'Create',
     'create_title' => 'Create Attendance',
     'record_title' => 'Attendance Record',
+    'student_number'  => 'Student Number',
+    'student_name'   => 'Student Name',
+    'student_number' => 'Student Number',
+    'export_excel'   => 'Export Excel',
+    'export_pdf'     => 'Export PDF',
 ];

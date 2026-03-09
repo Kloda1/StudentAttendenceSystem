@@ -78,4 +78,12 @@ return [
     'import_success' => 'تم استيراد الطلاب بنجاح',
     'import_failed' => 'فشل الاستيراد، يرجى التحقق من صيغة الملف',
     'enter_student_number_and_code' => 'أدخل الرقم الجامعي ورمز التحقق لإتمام تأكيد الحضور.',
+    'absent_students' => 'الطلاب الغائبين',
+    'serial'          => '#',
+    'name'            => 'الاسم',
+    'student_number'  => 'الرقم الجامعي',
+    'student_name'   => 'اسم الطالب',
+    'student_number' => 'الرقم الجامعي',
+    'export_excel'   => 'تصدير إكسل',
+    'export_pdf'     => 'تصدير PDF',
 ];

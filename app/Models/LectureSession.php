@@ -39,11 +39,19 @@ class LectureSession extends Model
         return $this->belongsTo(Hall::class);
     }
 
+    // public function attendances()
+    // {
+    //     return $this->hasMany(Attendance::class);
+    // }
+    public function students()
+{
+    return $this->belongsToMany(Student::class, 'subject_student', 'subject_id', 'student_id');
+}
+
     public function attendances()
     {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(Attendance::class, 'lecture_session_id');
     }
-
     public function tokens()
     {
         return $this->hasMany(AttendanceToken::class);

@@ -61,5 +61,9 @@ return [
     'create' => 'إضافة',
     'create_title' => 'إضافة سجل حضور',
     'record_title' => 'سجل حضور',
+    'student_name'   => 'اسم الطالب',
+    'student_number' => 'الرقم الجامعي',
+    'export_excel'   => 'تصدير إكسل',
+    'export_pdf'     => 'تصدير PDF',
 
 ];
