@@ -32,52 +32,70 @@ Route::post('/logout', [CustomLoginController::class, 'logout'])
     ->name('logout');
 
 
+// Public attendance page
 Route::get('/attendance', [AttendanceController::class, 'index'])
     ->name('student.attendance');
 
+// QR scan redirect
 Route::post(
     '/student/attendance/scan/{session}',
-    [AttendanceController::class, 'scan'])->name('student.attendance.scan');
+    [AttendanceController::class, 'scan']
+)->name('student.attendance.scan');
 
-//Route::get('/student/attendance/verify-otp/{session}', function ($session) {
-Route::get('/student/attendance/{session}', function ($session) {
-
-    session(['verify_session' => $session]);
-    return view('student.attendance');
-    // return view('student.attendance.verify-otp');
-
-})->name('student.attendance.verify.form');
-
-
+// QR code display for teachers
 Route::get(
     '/lecture-session/{session}/qr',
     [AttendanceController::class, 'showQr']
-)
-// ->middleware([  'throttle:30,1'])
-    ->name('teacher.lecture-session.qr');
+)->name('teacher.lecture-session.qr');
 
-
+// Student routes group
 Route::prefix('student')
     ->name('student.')
     ->group(function () {
 
+        // Dashboard
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
 
-        Route::get('/attendance/{session}', function ($session) {
+        // Attendance verification via session
+        Route::get('/attendance/{session}', [AttendanceController::class, 'verifySession'])
+            ->name('attendance.verify.form');
 
-            return view('student.attendance.verify-otp', [
-                'sessionId' => $session
-            ]);
-
-        })->name('attendance.verify.form');
-
+        // Store attendance
         Route::post('/attendance/store/{session}', [AttendanceController::class, 'store'])
-            ->name('student.attendance.store');
+            ->name('attendance.store');
+
+        // Store attendance sync (fallback)
+        Route::post('/attendance/store-sync/{session}', [AttendanceController::class, 'storeSync'])
+            ->name('attendance.store.sync');
+
+        // Check attendance status (AJAX)
+        Route::get('/attendance/check-status/{session}', [AttendanceController::class, 'checkStatus'])
+            ->name('attendance.check.status');
+
+        // Verify token from QR
+        Route::get('/attendance/verify/{token}', [AttendanceController::class, 'verifyToken'])
+            ->name('attendance.verify.token');
 
     });
 
-// routes for manager
+// Legacy routes for backward compatibility
+Route::get('/student/attendance/{session}', [AttendanceController::class, 'verifySession'])
+    ->name('student.attendance.verify.form');
+
+Route::post('/student/attendance/store/{session}', [AttendanceController::class, 'store'])
+    ->name('student.attendance.store');
+
+Route::post('/student/attendance/store-sync/{session}', [AttendanceController::class, 'storeSync'])
+    ->name('student.attendance.store.sync');
+
+Route::get('/student/attendance/check-status/{session}', [AttendanceController::class, 'checkStatus'])
+    ->name('student.attendance.check.status');
+
+Route::get('/student/attendance/verify/{token}', [AttendanceController::class, 'verifyToken'])
+    ->name('student.attendance.verify.token');
+
+// Routes for manager
 Route::middleware(['auth', 'role:manager'])
     ->prefix('manager')
     ->name('manager.')
@@ -93,6 +111,8 @@ Route::middleware(['auth', 'role:manager'])
             ->name('profile.update');
 
     });
+
+// Routes for teachers
 Route::middleware(['auth', 'role:course_lecturer'])
     ->prefix('teacher')
     ->name('teacher.')
@@ -106,15 +126,17 @@ Route::middleware(['auth', 'role:course_lecturer'])
 
         Route::put('/profile', [App\Http\Controllers\Teacher\ProfileController::class, 'update'])
             ->name('profile.update');
+
+        // Session status check for QR page
+        Route::get('/session/{session}/status', [App\Http\Controllers\Teacher\AttendanceController::class, 'sessionStatus'])
+            ->name('session.status');
+
+        // Mark QR as expired
+        Route::post('/session/{session}/expire-qr', [App\Http\Controllers\Teacher\AttendanceController::class, 'expireQr'])
+            ->name('session.expire-qr');
     });
-Route::get('/student/attendance/{session}', [AttendanceController::class, 'verifySession'])
-    ->name('student.attendance.verify.form');
-//Route::get('/student/attendance/verify/{token}', [AttendanceController::class, 'verifyToken'])
-//    ->name('student.attendance.verify.token');
-Route::post('/student/attendance/store/{session}', [AttendanceController::class, 'store'])
-    ->name('student.attendance.store');
-Route::get('/student/attendance/verify/{token}', [AttendanceController::class, 'verifyToken'])
-    ->name('student.attendance.verify.token');
+
+// Department API
 Route::get('/departments/{faculty}', function ($faculty) {
 
     return \App\Models\Department::where('faculty_id', $faculty)
@@ -122,7 +144,7 @@ Route::get('/departments/{faculty}', function ($faculty) {
         ->get();
 });
 
-
+// Home redirect
 Route::get('/', function () {
 
     if (auth()->check()) {

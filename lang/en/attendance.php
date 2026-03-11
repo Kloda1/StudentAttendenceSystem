@@ -7,7 +7,6 @@ return [
     'student_number' => 'Student Number',
     'export_excel' => 'Export Excel',
 
-
     'student_id' => 'Student ID',
     'attendance_token_id' => 'Attendance Token ID',
     'attendance_time' => 'Attendance Time',
@@ -52,7 +51,6 @@ return [
     'method_manual' => 'Manual',
     'method_admin' => 'Admin',
 
-
     'status_present' => 'Present',
     'status_late' => 'Late',
     'status_absent' => 'Absent',
@@ -62,9 +60,10 @@ return [
     'create' => 'Create',
     'create_title' => 'Create Attendance',
     'record_title' => 'Attendance Record',
-    'student_number'  => 'Student Number',
-    'student_name'   => 'Student Name',
     'student_number' => 'Student Number',
-    'export_excel'   => 'Export Excel',
-    'export_pdf'     => 'Export PDF',
+    'student_name' => 'Student Name',
+    'student_number' => 'Student Number',
+    'export_excel' => 'Export Excel',
+    'export_pdf' => 'Export PDF',
+    'export_full' => 'Export Full (Present/Absent)',
 ];

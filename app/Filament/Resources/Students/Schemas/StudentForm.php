@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Students\Schemas;
 
+use App\Models\Department;
+use App\Models\Faculty;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -16,13 +18,17 @@ class StudentForm
                 TextInput::make('name')
                     ->label(__('student.name'))
                     ->required(),
-                TextInput::make('faculty_id')
+                Select::make('faculty_id')
                     ->label(__('student.faculty_id'))
-                    ->numeric()
+                    ->options(Faculty::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
                     ->default(null),
-                TextInput::make('department_id')
+                Select::make('department_id')
                     ->label(__('student.department_id'))
-                    ->numeric()
+                    ->options(Department::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
                     ->default(null),
                 TextInput::make('year')
                     ->label(__('student.year'))
@@ -39,9 +45,9 @@ class StudentForm
                 Select::make('status')
                     ->label(__('student.status'))
                     ->options([
-                        'pending'   => __('student.status_pending'),
-                        'active'    => __('student.status_active'),
-                        'blocked'   => __('student.status_blocked'),
+                        'pending' => __('student.status_pending'),
+                        'active' => __('student.status_active'),
+                        'blocked' => __('student.status_blocked'),
                         'suspended' => __('student.status_suspended'),
                     ])
                     ->default('pending')

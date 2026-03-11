@@ -14,13 +14,11 @@ class StudentInfolist
             ->components([
                 TextEntry::make('name')
                     ->label(__('student.name')),
-                TextEntry::make('faculty_id')
+                TextEntry::make('faculty.name')
                     ->label(__('student.faculty_id'))
-                    ->numeric()
                     ->placeholder('-'),
-                TextEntry::make('department_id')
+                TextEntry::make('department.name')
                     ->label(__('student.department_id'))
-                    ->numeric()
                     ->placeholder('-'),
                 TextEntry::make('year')
                     ->label(__('student.year'))

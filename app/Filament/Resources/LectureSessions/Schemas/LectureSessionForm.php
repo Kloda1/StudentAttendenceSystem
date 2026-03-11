@@ -49,7 +49,7 @@ class LectureSessionForm
                 TextInput::make('qr_refresh_rate')
                     ->required()
                     ->numeric()
-                    ->default(40),
+                    ->default(120),
                 TextInput::make('expected_students')
                     ->required()
                     ->numeric()
