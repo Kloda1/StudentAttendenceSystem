@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     'singular' => 'طالب',
@@ -7,6 +6,7 @@ return [
     'create' => 'إضافة',
     'create_title' => 'إضافة طالب',
     'record_title' => 'سجل طالب',
+
 
     'university' => 'جامعة المنارة',
     'welcome' => 'مرحباً',
@@ -34,11 +34,10 @@ return [
     'attendance_success' => 'تم تسجيل الحضور بنجاح',
     'connection_error' => 'حدث خطأ في الاتصال',
     'error_prefix' => 'خطأ',
-    'success' => 'نجاح',
-    'processing' => 'جاري المعالجة',
 
     'university_name' => 'جامعة المنارة',
     'greeting' => 'مرحباً',
+
 
     'student_dashboard' => 'لوحة الطالب',
     'arabic' => 'العربية',
@@ -79,30 +78,12 @@ return [
     'import_success' => 'تم استيراد الطلاب بنجاح',
     'import_failed' => 'فشل الاستيراد، يرجى التحقق من صيغة الملف',
     'enter_student_number_and_code' => 'أدخل الرقم الجامعي ورمز التحقق لإتمام تأكيد الحضور.',
-    'absent_students' => 'الطلاب الغائبون',
-    'already_attended' => 'لقد قمت بتسجيل حضورك بالفعل',
-    'already_attending' => 'لديك طلب قيد المعالجة، يرجى الانتظار',
-    'attendance_processing' => 'جاري معالجة طلب الحضور...',
-    'please_fill_all_fields' => 'يرجى ملء جميع الحقول',
-    'serial' => '#',
-    'name' => 'الاسم',
+    'absent_students' => 'الطلاب الغائبين',
+    'serial'          => '#',
+    'name'            => 'الاسم',
+    'student_number'  => 'الرقم الجامعي',
+    'student_name'   => 'اسم الطالب',
     'student_number' => 'الرقم الجامعي',
-    'student_name' => 'اسم الطالب',
-    'student_number' => 'الرقم الجامعي',
-    'export_excel' => 'تصدير إكسل',
-    'export_pdf' => 'تصدير PDF',
-
-    // New translations for enhanced UI
-    'time_remaining' => 'الوقت المتبقي',
-    'online' => 'متصل',
-    'offline' => 'غير متصل',
-    'please_wait' => 'يرجى الانتظار...',
-    'timeout_waiting' => 'انتهت مهلة الانتظار، يرجى إعادة المحاولة',
-    'attendance_time' => 'وقت الحضور',
-    'session_expired' => 'انتهت جلسة الحضور',
-    'session_not_active' => 'الجلسة غير نشطة',
-    'teacher' => 'الأستاذ',
-    'hall' => 'القاعة',
-    'date' => 'التاريخ',
-    'subject' => 'المادة',
+    'export_excel'   => 'تصدير إكسل',
+    'export_pdf'     => 'تصدير PDF',
 ];

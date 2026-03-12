@@ -19,13 +19,13 @@ class StudentsTable
                 TextColumn::make('name')
                     ->label(__('student.name'))
                     ->searchable(),
-                TextColumn::make('faculty.name')
+                TextColumn::make('faculty_id')
                     ->label(__('student.faculty_id'))
-                    ->searchable()
+                    ->numeric()
                     ->sortable(),
-                TextColumn::make('department.name')
+                TextColumn::make('department_id')
                     ->label(__('student.department_id'))
-                    ->searchable()
+                    ->numeric()
                     ->sortable(),
                 TextColumn::make('year')
                     ->label(__('student.year'))

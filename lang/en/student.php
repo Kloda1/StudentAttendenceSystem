@@ -1,5 +1,4 @@
 <?php
-
 return [
     'singular' => 'Student',
     'plural' => 'Students',
@@ -24,8 +23,6 @@ return [
     'attendance_success' => 'Attendance recorded successfully',
     'connection_error' => 'Connection error occurred',
     'error_prefix' => 'Error',
-    'success' => 'Success',
-    'processing' => 'Processing',
 
     'university_name' => 'Al-Manara University',
     'greeting' => 'Welcome',
@@ -77,29 +74,12 @@ return [
     'import_failed' => 'Import failed, please check the file format',
     'enter_student_number_and_code' => 'Enter your student number and verification code to confirm your attendance.',
     'absent_students' => 'Absent Students',
-    'already_attended' => 'You have already recorded your attendance',
-    'already_attending' => 'You have a pending request, please wait',
-    'attendance_processing' => 'Processing attendance request...',
-    'please_fill_all_fields' => 'Please fill all fields',
-    'serial' => '#',
-    'name' => 'Name',
+    'serial'          => '#',
+    'name'            => 'Name',
+    'student_number'  => 'Student Number',
+    'student_name'   => 'Student Name',
     'student_number' => 'Student Number',
-    'student_name' => 'Student Name',
-    'student_number' => 'Student Number',
-    'export_excel' => 'Export Excel',
-    'export_pdf' => 'Export PDF',
+    'export_excel'   => 'Export Excel',
+    'export_pdf'     => 'Export PDF',
 
-    // New translations for enhanced UI
-    'time_remaining' => 'Time Remaining',
-    'online' => 'Online',
-    'offline' => 'Offline',
-    'please_wait' => 'Please wait...',
-    'timeout_waiting' => 'Timeout waiting, please try again',
-    'attendance_time' => 'Attendance Time',
-    'session_expired' => 'Session expired',
-    'session_not_active' => 'Session not active',
-    'teacher' => 'Teacher',
-    'hall' => 'Hall',
-    'date' => 'Date',
-    'subject' => 'Subject',
 ];

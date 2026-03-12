@@ -47,6 +47,7 @@ return [
     'device_fingerprint' => 'بصمة الجهاز',
     'location_data' => 'بيانات الموقع',
 
+
     'method_qr_scan' => 'مسح QR',
     'method_manual' => 'يدوي',
     'method_admin' => 'مسؤول',
@@ -60,10 +61,9 @@ return [
     'create' => 'إضافة',
     'create_title' => 'إضافة سجل حضور',
     'record_title' => 'سجل حضور',
-    'student_name' => 'اسم الطالب',
+    'student_name'   => 'اسم الطالب',
     'student_number' => 'الرقم الجامعي',
-    'export_excel' => 'تصدير إكسل',
-    'export_pdf' => 'تصدير PDF',
-    'export_full' => 'تصدير كامل (حاضر/غائب)',
+    'export_excel'   => 'تصدير إكسل',
+    'export_pdf'     => 'تصدير PDF',
 
 ];

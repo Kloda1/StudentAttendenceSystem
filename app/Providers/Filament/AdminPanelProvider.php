@@ -3,15 +3,6 @@
 namespace App\Providers\Filament;
 
 use Andreia\FilamentNordTheme\FilamentNordThemePlugin;
-use App\Filament\Resources\Attendances\AttendanceResource;
-use App\Filament\Resources\Departments\DepartmentResource;
-use App\Filament\Resources\FailedAttempts\FailedAttemptResource;
-use App\Filament\Resources\Halls\HallResource;
-use App\Filament\Resources\LectureSessions\LectureSessionResource;
-use App\Filament\Resources\StudentDevices\StudentDeviceResource;
-use App\Filament\Resources\Students\StudentResource;
-use App\Filament\Resources\Subjects\SubjectResource;
-use App\Filament\Resources\Users\UserResource;
 use App\Http\Middleware\SetAdminLocale;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Actions\Action;
@@ -50,24 +41,17 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('3rem')
             ->favicon(asset('images/favicon.ico'))
-            // Only show specific resources - hide: Attendances, FailedAttempts, StudentDevices
-            ->resources([
-                config('filament-logger.activity_resource'),
-                StudentResource::class,
-                SubjectResource::class,
-                LectureSessionResource::class,
-                HallResource::class,
-                DepartmentResource::class,
-                UserResource::class,
-                // Hidden resources (can be accessed programmatically if needed):
-                // AttendanceResource::class,
-                // FailedAttemptResource::class,
-                // StudentDeviceResource::class,
-            ])
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->brandName('Student Attendance System ')
             ->pages([
                 Dashboard::class,
             ])
+            ->resources([
+                config('filament-logger.activity_resource'),
+            ])
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,

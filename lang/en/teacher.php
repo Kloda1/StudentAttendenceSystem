@@ -35,8 +35,6 @@ return [
     'session_qr' => 'Session QR Code',
     'auto_refresh' => 'Auto refreshes every :seconds seconds',
     'verification_code' => 'Verification Code',
-    'qr_expired' => 'QR Expired',
-    'qr_expired_message' => 'Session expired, click refresh to generate new code',
-    'qr_expires_in' => 'Token expires in',
-    'refresh' => 'Refresh',
+     'qr_expired' => 'QR Expired',
+     'qr_expires_in' =>  'Qr Expired in ',
 ];

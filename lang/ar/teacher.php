@@ -32,12 +32,10 @@ return [
     'none' => 'لا يوجد',
     'go_admin_panel' => 'دخول لوحة الإدارة',
     'qr_code' => 'رمز الاستجابة السريعة',
-    'session_qr' => 'QR Code',
+    'session_qr' => 'QR Code الجلسة',
     'auto_refresh' => 'يحدث تلقائياً كل :seconds ثانية',
     'verification_code' => 'رمز التحقق',
-    'qr_expired' => 'انتهت صلاحية رمز QR',
-    'qr_expired_message' => 'انتهت الجلسة، يرجى الضغط على تحديث للحصول على رمز جديد',
-    'qr_expires_in' => 'سينتهي الرمز خلال',
-    'refresh' => 'تحديث',
+   'qr_expired' => 'انتهت صلاحية رمز QR',
+   'qr_expires_in' => 'سينتهي رمز QR بعد',
 
 ];
