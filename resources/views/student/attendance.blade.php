@@ -851,6 +851,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitText.textContent = '{{ __('student.verify') }}';
 
             if (successAlert && !errorAlert) {
+                
                 const successMessage = successAlert.textContent.trim();
 
              showStatus(successMessage, 'success');
